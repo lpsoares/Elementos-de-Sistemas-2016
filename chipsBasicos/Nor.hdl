@@ -1,0 +1,16 @@
+// by Luciano Soares.
+// File name: Nor.hdl
+
+ /**
+ * Nor gate:
+ * out = 0 if (a == 1 or b == 1)
+ *       1 otherwise
+ */
+
+CHIP Nor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+}
