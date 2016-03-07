@@ -11,5 +11,9 @@ CHIP Xnor {
     OUT out;
 
     PARTS:
-    // Put your code here:
+    Nand(a=a, b=b, out=nandab);
+    Nand(a=a, b=nandab, out=i1);
+    Nand(a=nandab, b=b, out=i2);
+    Nand(a=i1, b=i2, out=axorb);
+    Nand(a=axorb, b=axorb, out=out);
 }
