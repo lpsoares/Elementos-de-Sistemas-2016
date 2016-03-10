@@ -1,11 +1,3 @@
-// by Luciano Soares.
-// File name: Xnor.hdl
-
-/**
- * Exclusive-nor gate:
- * out = (a == b)
- */
-
 CHIP Xnor {
     IN a, b;
     OUT out;
