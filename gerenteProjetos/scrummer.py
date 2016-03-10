@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from random import choice
 
 def getScrummer():
@@ -23,9 +25,11 @@ def setScrummer():
 		file.write(aluno + "\n")
 	file.close()
 
-try:
-	getScrummer()
+if __name__ == "__main__":
+	try:
+		getScrummer()
 
-except FileNotFoundError:
-	setScrummer()
-	getScrummer()
+	except FileNotFoundError:
+		setScrummer()
+		getScrummer()
+
