@@ -1,0 +1,9 @@
+CHIP Zerador {
+    IN a[16], sel[16];
+    OUT out[16];
+
+    PARTS:
+
+    	Not16(in=sel[16], out=w[16]);
+    	And16(a=w[16],b=a[16],out=out);
+    }
