@@ -48,7 +48,7 @@ CHIP ALU {
         Negador(in = zyout, sel = ny, out = nyout);
         Add16(a = nxout, b = nyout, out = soma);
         And16(a = nxout, b = nyout, out = outand);
-        Mux16(a = soma, b = outand, sel = f, out = outf);
+        Mux16(a = outand, b = soma, sel = f, out = outf);
         Negador(in = outf, sel = no, out = outi);
         Negador(in = outf, sel = no, out = out);
         Comparador(in = outi, zr = zr, ng = ng);
