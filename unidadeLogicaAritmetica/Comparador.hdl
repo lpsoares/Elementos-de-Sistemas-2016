@@ -1,0 +1,13 @@
+CHIP Comparador {
+	IN in[16];
+
+	OUT zr, ng;
+
+
+	PARTS:
+	Or8Way(in=in[0..7],out=get1);
+	Or8Way(in=in[8..15],out=get2);
+	Or(a=get1,b=get2,out=get3);
+	Not(in=get3,out=zr);
+	And(a=in[15],b=in[15],out=ng);
+}
