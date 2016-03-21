@@ -42,14 +42,14 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-        Zerador(a = x, sel = zx, out = z_x_out[16]);
-        Zerador(a = y, sel = zy, out = z_y_out[16]);
-        Negador(in = z_x_out, sel = nx, out = n_x_out);
-        Negador(in = z_y_out, sel = ny, out = n_y_out);
-        Add16(a = n_x_out, b = n_y_out, out = soma);
-        And(a = n_x_out, b = n_y_out, out = out_and);
-        Mux16(a = soma, b = out_and, sel = f, out = out_f);
-        Negador(in = out_f, sel = no, out = out);
-        CompNG(in = out, out = ng);
-        CompZR(in = out, out = zr);
+        Zerador(a = x, sel = zx, out = zxout);
+        Zerador(a = y, sel = zy, out = zyout);
+        Negador(in = zxout, sel = nx, out = nxout);
+        Negador(in = zyout, sel = ny, out = nyout);
+        Add16(a = nxout, b = nyout, out = soma);
+        And16(a = nxout, b = nyout, out = outand);
+        Mux16(a = soma, b = outand, sel = f, out = outf);
+        Negador(in = outf, sel = no, out = outi);
+        Negador(in = outf, sel = no, out = out);
+        Comparador(in = outi, zr = zr, ng = ng);
 }
