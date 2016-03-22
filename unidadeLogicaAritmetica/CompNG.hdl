@@ -1,0 +1,11 @@
+CHIP CompNG {
+  IN
+    in[16];
+
+  OUT
+    ng;
+
+  PARTS:
+    Not(in = in[0], out = bla);
+    Not(in = bla, out = ng);
+}
