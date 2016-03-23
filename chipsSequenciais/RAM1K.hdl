@@ -1,0 +1,17 @@
+// bu Luciano Soares
+// File name: projects/03/b/RAM1K.hdl
+
+/**
+ * Memory of 1K registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then 
+ * the in value is loaded into the memory location specified by address 
+ * (the loaded value will be emitted to out from the next time step onward).
+ */
+
+CHIP RAM1K {
+    IN in[16], load, address[10];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+}

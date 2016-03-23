@@ -1,0 +1,16 @@
+// by Luciano Soares
+// File name: ShiftRegisterSIPO16.hdl
+
+/**
+ * shift register tipo SIPO de 16 bits:
+ * out[0] = in[t], out = in[t+1], out = in[t+2], ...
+ */
+
+CHIP ShiftRegisterSIPO16 {
+    IN in;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+
+}

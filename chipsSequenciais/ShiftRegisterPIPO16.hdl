@@ -1,0 +1,18 @@
+// by Luciano Soares
+// File name: ShiftRegisterPIPO16.hdl
+
+/**
+ * shift register tipo PIPO de 16 bits:
+ * If direction == 0 then out[t+1] = out[t] << 1
+ *                   else out[t+1] = out[t] >> 1
+ * os novos bits podem ser preenchidos com 0
+ */
+
+CHIP ShiftRegisterPIPO16 {
+    IN in[16], direction;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+
+}
