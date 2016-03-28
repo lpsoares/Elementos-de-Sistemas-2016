@@ -13,6 +13,75 @@ CHIP ShiftRegisterPIPO16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+      /*Bit(in=in[1],load=true,out=outR[0]);
+      Bit(in=in[2],load=true,out=outR[1]);
+      Bit(in=in[3],load=true,out=outR[2]);
+      Bit(in=in[4],load=true,out=outR[3]);
+      Bit(in=in[5],load=true,out=outR[4]);
+      Bit(in=in[6],load=true,out=outR[5]);
+      Bit(in=in[7],load=true,out=outR[6]);
+      Bit(in=in[8],load=true,out=outR[7]);
+      Bit(in=in[9],load=true,out=outR[8]);
+      Bit(in=in[10],load=true,out=outR[9]);
+      Bit(in=in[11],load=true,out=outR[10]);
+      Bit(in=in[12],load=true,out=outR[11]);
+      Bit(in=in[13],load=true,out=outR[12]);
+      Bit(in=in[14],load=true,out=outR[13]);
+      Bit(in=in[15],load=true,out=outR[14]);
+      Nand(a=true, b=true, out=outR[15]);
+
+      Nand(a=true, b=true, out=outL[0]);
+      Bit(in=in[0],load=true,out=outL[1]);
+      Bit(in=in[1],load=true,out=outL[2]);
+      Bit(in=in[2],load=true,out=outL[3]);
+      Bit(in=in[3],load=true,out=outL[4]);
+      Bit(in=in[4],load=true,out=outL[5]);
+      Bit(in=in[5],load=true,out=outL[6]);
+      Bit(in=in[6],load=true,out=outL[7]);
+      Bit(in=in[7],load=true,out=outL[8]);
+      Bit(in=in[8],load=true,out=outL[9]);
+      Bit(in=in[9],load=true,out=outL[10]);
+      Bit(in=in[10],load=true,out=outL[11]);
+      Bit(in=in[11],load=true,out=outL[12]);
+      Bit(in=in[12],load=true,out=outL[13]);
+      Bit(in=in[13],load=true,out=outL[14]);
+      Bit(in=in[14],load=true,out=outL[15]);
+
+      Mux16(a=outL, b=outR, sel=direction, out=out);*/
+
+      Bit(in=in[1],load=true,out=outR0);
+      Bit(in=in[2],load=true,out=outR1);
+      Bit(in=in[3],load=true,out=outR2);
+      Bit(in=in[4],load=true,out=outR3);
+      Bit(in=in[5],load=true,out=outR4);
+      Bit(in=in[6],load=true,out=outR5);
+      Bit(in=in[7],load=true,out=outR6);
+      Bit(in=in[8],load=true,out=outR7);
+      Bit(in=in[9],load=true,out=outR8);
+      Bit(in=in[10],load=true,out=outR9);
+      Bit(in=in[11],load=true,out=outR10);
+      Bit(in=in[12],load=true,out=outR11);
+      Bit(in=in[13],load=true,out=outR12);
+      Bit(in=in[14],load=true,out=outR13);
+      Bit(in=in[15],load=true,out=outR14);
+
+      Bit(in=in[0],load=true,out=outL1);
+      Bit(in=in[1],load=true,out=outL2);
+      Bit(in=in[2],load=true,out=outL3);
+      Bit(in=in[3],load=true,out=outL4);
+      Bit(in=in[4],load=true,out=outL5);
+      Bit(in=in[5],load=true,out=outL6);
+      Bit(in=in[6],load=true,out=outL7);
+      Bit(in=in[7],load=true,out=outL8);
+      Bit(in=in[8],load=true,out=outL9);
+      Bit(in=in[9],load=true,out=outL10);
+      Bit(in=in[10],load=true,out=outL11);
+      Bit(in=in[11],load=true,out=outL12);
+      Bit(in=in[12],load=true,out=outL13);
+      Bit(in=in[13],load=true,out=outL14);
+      Bit(in=in[14],load=true,out=outL15);
+
+
+      Mux16(a=[false,outL1,outL2,outL3,outL4,outL5,outL6,outL7,outL8,outL9,outL10,outL11,outL12,outL13,outL14,outL15], b=[outR0,outR1,outR2,outR3,outR4,outR5,outR6,outR7,outR8,outR9,outR10,outR11,outR12,outR13,outR14,false], load=direction, out=out)
 
 }
