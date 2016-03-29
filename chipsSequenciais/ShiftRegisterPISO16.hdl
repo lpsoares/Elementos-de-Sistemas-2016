@@ -1,0 +1,18 @@
+// by Luciano Soares
+// File name: ShiftRegisterPISO16.hdl
+
+/**
+ * shift register tipo PISO de 16 bits:
+ * If load == 1 then load in
+ * out = in[0], out = in[1], out = in[2], ...
+ * os outros bits podem ser preenchidos com 0
+ */
+
+CHIP ShiftRegisterPISO16 {
+    IN in[16], load;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+
+}

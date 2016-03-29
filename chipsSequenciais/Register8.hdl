@@ -1,0 +1,16 @@
+// by Luciano Soares
+// File name: projects/03/a/Register8.hdl
+
+/**
+ * 8-bit register:
+ * If load[t] == 1 then out[t+1] = in[t]
+ * else out does not change
+ */
+
+CHIP Register8 {
+    IN in[8], load;
+    OUT out[8];
+
+    PARTS:
+    // Put your code here:
+}
