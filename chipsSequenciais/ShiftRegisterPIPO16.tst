@@ -1,18 +1,18 @@
 load ShiftRegisterPIPO16.hdl,
 output-file ShiftRegisterPIPO16.out,
 compare-to ShiftRegisterPIPO16.cmp,
-output-list time%S1.4.1 in%D1.6.1 load%B2.1.2 out%D1.6.1;
+output-list time%S1.4.1 in%D1.2.1 direction%B2.6.2 out%D1.3.1;
 
-set in 1010010000111001,
-set load 1,
+set in 88,
+set direction 000001,
 tick,
 output;
 
 tock,
 output;
 
-set in 1010010000111001,
-set load 0,
+set in 88,
+set direction 000000,
 tick,
 output;
 
