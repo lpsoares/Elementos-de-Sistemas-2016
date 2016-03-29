@@ -1,4 +1,4 @@
-CHIP ShiftRegisterSISO16 {
+CHIP Siso {
     IN in ;
     OUT out;
 
