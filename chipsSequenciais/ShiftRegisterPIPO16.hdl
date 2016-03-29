@@ -82,6 +82,21 @@ CHIP ShiftRegisterPIPO16 {
       Bit(in=in[14],load=true,out=outL15);
 
 
-      Mux16(a=[false,outL1,outL2,outL3,outL4,outL5,outL6,outL7,outL8,outL9,outL10,outL11,outL12,outL13,outL14,outL15], b=[outR0,outR1,outR2,outR3,outR4,outR5,outR6,outR7,outR8,outR9,outR10,outR11,outR12,outR13,outR14,false], load=direction, out=out)
-
+      /*Mux16(a=[false,outL1,outL2,outL3,outL4,outL5,outL6,outL7,outL8,outL9,outL10,outL11,outL12,outL13,outL14,outL15], b=[outR0,outR1,outR2,outR3,outR4,outR5,outR6,outR7,outR8,outR9,outR10,outR11,outR12,outR13,outR14,false], sel=direction, out=out)*/
+      Mux(a=false, b=outR0, sel=direction, out=out[0]);
+      Mux(a=outL1, b=outR1, sel=direction, out=out[1]);
+      Mux(a=outL2, b=outR2, sel=direction, out=out[2]);
+      Mux(a=outL3, b=outR3, sel=direction, out=out[3]);
+      Mux(a=outL4, b=outR4, sel=direction, out=out[4]);
+      Mux(a=outL5, b=outR5, sel=direction, out=out[5]);
+      Mux(a=outL6, b=outR6, sel=direction, out=out[6]);
+      Mux(a=outL7, b=outR7, sel=direction, out=out[7]);
+      Mux(a=outL8, b=outR8, sel=direction, out=out[8]);
+      Mux(a=outL9, b=outR9, sel=direction, out=out[9]);
+      Mux(a=outL10, b=outR10, sel=direction, out=out[10]);
+      Mux(a=outL11, b=outR11, sel=direction, out=out[11]);
+      Mux(a=outL12, b=outR12, sel=direction, out=out[12]);
+      Mux(a=outL13, b=outR13, sel=direction, out=out[13]);
+      Mux(a=outL14, b=outR14, sel=direction, out=out[14]);
+      Mux(a=outL15, b=false, sel=direction, out=out[15]);
 }
