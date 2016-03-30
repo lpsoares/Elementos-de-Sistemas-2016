@@ -1,16 +1,8 @@
-// by Luciano Soares.
-// File name: projects/03/a/Register32.hdl
-
-/**
- * 32-bit register:
- * If load[t] == 1 then out[t+1] = in[t]
- * else out does not change
- */
-
-CHIP Register {
+CHIP Register32 {
     IN in[32], load;
     OUT out[32];
 
     PARTS:
-    // Put your code here:
+    Register(in=in[0..15],load=load,out=out[0..15]);
+    Register(in=in[16..31],load=load,out=out[16..31]);
 }
