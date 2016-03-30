@@ -1,4 +1,4 @@
-//Feito por Lucas e Toyama
+//Feito por Lucas e Andre
 
 CHIP RAM64 {
     IN in[16], load, address[6];
