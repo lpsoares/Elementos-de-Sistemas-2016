@@ -1,0 +1,15 @@
+//Feito por Lucas e Toyama
+
+CHIP RAM64 {
+    IN in[16], load, address[6];
+    OUT out[16];
+
+    PARTS:
+
+
+
+
+
+
+
+}
