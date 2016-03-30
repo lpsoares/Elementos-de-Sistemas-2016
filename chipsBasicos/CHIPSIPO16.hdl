@@ -1,0 +1,26 @@
+CHIP 	CHIPSIPO16 {
+	
+IN in, load;
+OUT out[16];
+
+PARTS:
+
+DFF(in=in,out=a);
+DFF(in=a,out=b);
+DFF(in=b,out=c);
+DFF(in=c,out=d);
+DFF(in=d,out=e);
+DFF(in=e,out=f);
+DFF(in=f,out=g);
+DFF(in=g,out=h);
+DFF(in=h,out=i);
+DFF(in=i,out=j);
+DFF(in=j,out=k);
+DFF(in=k,out=l);
+DFF(in=l,out=m);
+DFF(in=m,out=n);
+DFF(in=n,out=p);
+DFF(in=p,out=q);
+
+Register(in[0]=a,in[1]=b,in[2]=c,in[3]=d,in[4]=e,in[5]=f,in[6]=g,in[7]=h,in[8]=i,in[9]=j,in[10]=k,in[11]=l,in[12]=m,in[13]=n,in[14]=p,in[15]=q, load=load, out=out);
+}
