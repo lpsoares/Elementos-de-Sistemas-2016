@@ -1,4 +1,4 @@
-CHIP 	CHIPSIPO16 {
+CHIP CHIPSIPO16 {
 	
 IN in, load;
 OUT out[16];
@@ -22,5 +22,5 @@ DFF(in=m,out=n);
 DFF(in=n,out=p);
 DFF(in=p,out=q);
 
-Register(in[0]=a,in[1]=b,in[2]=c,in[3]=d,in[4]=e,in[5]=f,in[6]=g,in[7]=h,in[8]=i,in[9]=j,in[10]=k,in[11]=l,in[12]=m,in[13]=n,in[14]=p,in[15]=q, load=load, out=out);
+Register(in[0]=a,in[1]=b,in[2]=c,in[3]=d,in[4]=e,in[5]=f,in[6]=g,in[7]=h,in[8]=i,in[9]=j,in[10]=k,in[11]=l,in[12]=m,in[13]=n,in[14]=p,in[15]=q, load=load, out[0]=out[0],out[1]=out[1],out[2]=out[2],out[3]=out[3],out[4]=out[4],out[5]=out[5],out[6]=out[6],out[7]=out[7],out[8]=out[8],out[9]=out[9],out[10]=out[10],out[11]=out[11],out[12]=out[12],out[13]=out[13],out[14]=out[14],out[15]=out[15]);
 }
