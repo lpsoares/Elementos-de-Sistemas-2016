@@ -1,4 +1,5 @@
 CHIP Bit {
+
     IN in , load;
     OUT out;
 
@@ -8,4 +9,5 @@ CHIP Bit {
 
 
 }
+
 
