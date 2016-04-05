@@ -1,13 +1,10 @@
 CHIP Bit {
+	IN in, load;
+	OUT out;
 
-    IN in , load;
-    OUT out;
+	PARTS:
 
-    PARTS:
-	Mux(a = saidap, b = in, sel = load, out = outm );
-	DFF(in = outm, out = saidap, out = out);
-
+	Mux(a=d,b=in,sel=load,out=c);
+	DFF(in=c,out=out,out=d);
 
 }
-
-
