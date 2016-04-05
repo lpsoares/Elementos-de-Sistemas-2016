@@ -21,5 +21,4 @@ CHIP RAM64 {
 
     Mux8Way16(a=outA, b=outB, c=outC, d=outD, e=outE, f=outF, g=outG, h=outH, sel=address[3..5], out=out);
 
-
 }
