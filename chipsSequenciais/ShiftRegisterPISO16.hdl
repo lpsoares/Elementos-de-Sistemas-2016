@@ -1,0 +1,132 @@
+// by Luciano Soares
+// File name: ShiftRegisterPISO16.hdl
+
+/**
+ * shift register tipo PISO de 16 bits:
+ * If load == 1 then load in
+ * out = in[0], out = in[1], out = in[2], ...
+ * os outros bits podem ser preenchidos com 0
+ */
+
+CHIP ShiftRegisterPISO16 {
+    IN in[16], load;
+    OUT out;
+
+    PARTS:
+
+     //DFF0
+
+    DFF(in=in[0],out=Q0);
+
+    Not(in=load,out=load2);
+
+    //DFF1
+
+    And(a=Q0,b=load,out=n1d1);
+    And(a=load2,b=in[1],out=n2d1);
+    Or(a=n1d1,b=n2d1,out=D1);
+    DFF(in=D1,out=Q1);
+
+    //DFF2
+
+    And(a=Q1,b=load,out=n1d2);
+    And(a=load2,b=in[2],out=n2d2);
+    Or(a=n1d2,b=n2d2,out=D2);
+    DFF(in=D2,out=Q2);
+
+	//DFF3
+
+    And(a=Q2,b=load,out=n1d3);
+    And(a=load2,b=in[3],out=n2d3);
+    Or(a=n1d3,b=n2d3,out=D3);
+    DFF(in=D3,out=Q3);
+
+	//DFF4
+
+    And(a=Q3,b=load,out=n1d4);
+    And(a=load2,b=in[4],out=n2d4);
+    Or(a=n1d4,b=n2d4,out=D4);
+    DFF(in=D4,out=Q4);
+
+	//DFF5
+
+    And(a=Q4,b=load,out=n1d5);
+    And(a=load2,b=in[5],out=n2d5);
+    Or(a=n1d5,b=n2d5,out=D5);
+    DFF(in=D5,out=Q5);
+
+    //DFF6
+
+    And(a=Q5,b=load,out=n1d6);
+    And(a=load2,b=in[6],out=n2d6);
+    Or(a=n1d6,b=n2d6,out=D6);
+    DFF(in=D6,out=Q6);
+
+    //DFF7
+
+    And(a=Q6,b=load,out=n1d7);
+    And(a=load2,b=in[7],out=n2d7);
+    Or(a=n1d7,b=n2d7,out=D7);
+    DFF(in=D7,out=Q7);
+
+    //DFF8
+
+    And(a=Q7,b=load,out=n1d8);
+    And(a=load2,b=in[8],out=n2d8);
+    Or(a=n1d8,b=n2d8,out=D8);
+    DFF(in=D8,out=Q8);
+
+    //DFF9
+
+    And(a=Q8,b=load,out=n1d9);
+    And(a=load2,b=in[9],out=n2d9);
+    Or(a=n1d9,b=n2d9,out=D9);
+    DFF(in=D9,out=Q9);
+
+    //DFF10
+
+    And(a=Q9,b=load,out=n1d10);
+    And(a=load2,b=in[10],out=n2d10);
+    Or(a=n1d10,b=n2d10,out=D10);
+    DFF(in=D10,out=Q10);
+
+    //DFF11
+
+    And(a=Q10,b=load,out=n1d11);
+    And(a=load2,b=in[11],out=n2d11);
+    Or(a=n1d11,b=n2d11,out=D11);
+    DFF(in=D11,out=Q11);
+
+    //DFF12
+
+    And(a=Q11,b=load,out=n1d12);
+    And(a=load2,b=in[12],out=n2d12);
+    Or(a=n1d12,b=n2d12,out=D12);
+    DFF(in=D12,out=Q12);
+
+    //DFF13
+
+    And(a=Q12,b=load,out=n1d13);
+    And(a=load2,b=in[13],out=n2d13);
+    Or(a=n1d13,b=n2d13,out=D13);
+    DFF(in=D13,out=Q13);
+
+    //DFF14
+
+    And(a=Q13,b=load,out=n1d14);
+    And(a=load2,b=in[14],out=n2d14);
+    Or(a=n1d14,b=n2d14,out=D14);
+    DFF(in=D14,out=Q14);
+
+    //DFF15
+
+    And(a=Q14,b=load,out=n1d15);
+    And(a=load2,b=in[15],out=n2d15);
+    Or(a=n1d15,b=n2d15,out=D15);
+    DFF(in=D15,out=out);
+
+
+
+
+
+}
