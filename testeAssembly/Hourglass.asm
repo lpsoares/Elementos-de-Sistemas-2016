@@ -60,8 +60,10 @@ M = M -1
 D = M
 @tag3
 D;JGT
+@15
+D = A
 @1
-M = -1
+M = D
 @2 
 M = 0
 @15
@@ -76,3 +78,14 @@ M = M + D
 D = M
 @SCREEN
 D = D + A
+@0
+D = D - M
+A = D
+M = - 1
+@2
+M = D
+@0
+M = M - 1
+D = M
+@tag4
+D;JGT
