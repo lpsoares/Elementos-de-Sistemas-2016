@@ -3,6 +3,7 @@
 
 // Desenha um triângulo retângulo na tela quando uma tecla é pressionada.
 
+<<<<<<< HEAD
 //@KBD // Define o registrador A para apontar para o teclado
 //D = M // Coloca no registrador D o valor ASCII da tecla.
 //@0
@@ -145,3 +146,6 @@ M=D
 
 
 
+=======
+// Put your code here.
+>>>>>>> b4f3aabc94609011c72df047a991639457fa986a

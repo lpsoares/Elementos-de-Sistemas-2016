@@ -1,0 +1,14 @@
+// Luciano Soares.
+// File name: InstructionDecoder.hdl
+
+/**
+ * Chip da memória de Instruções.
+ */
+
+CHIP InstructionDecoder {
+    IN ; // ler a instruções e demais retornos da CPU
+    OUT ; // controlar todos os modulos da CPU
+
+    PARTS:
+    // Put your code here:
+}
