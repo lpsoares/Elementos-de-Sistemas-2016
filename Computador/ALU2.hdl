@@ -49,5 +49,17 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-   // Put you code here:
-}
+        Zerador(a = x, sel = zx, out = zxout);
+        Zerador(a = y, sel = zy, out = zyout);
+        Negador(in = zxout, sel = nx, out = nxout);
+        Negador(in = zyout, sel = ny, out = nyout);
+        Add16(a = nxout, b = nyout, out = soma);
+        And16(a = nxout, b = nyout, out = outand);
+        Mux16(a = outand, b = soma, sel = f, out = outf);
+        Negador(in = outf, sel = no, out = outi);
+        Negador(in = outf, sel = no, out = outn);
+        Comparador(in = outi, zr = zr, ng = ng);
+        Mux16(a=outn, b=outd, sel=bs, out=out)
+        Not(in=dr, out=outnot)
+        Mux16(a[0]=dr,a[1]=outn[1],a[2]=outn[2],a[3]=outn[3],a[4]=outn[4],a[5]=outn[5],a[6]=outn[6],a[7]=outn[7],a[8]=outn[8],a[9]=outn[9],a[10]]=outn[10],a[11]=outn[11],a[12]=outn[12],a[13]=outn[13],a[14]=outn[14],a[15]=outn[15], b[0]=outn[0],b[1]=outn[1],b[2]=outn[2],b[3]=outn[3],b[4]=outn[4],b[5]=outn[5],b[6]=outn[6],b[7]=outn[7],b[8]=outn[8],b[9]=outn[9],b[10]=outn[10],b[11]=outn[11],b[12]=outn[12],b[13]=outn[13],b[14]=outn[14],b[15]=outnot, sel=dr, out=outd)
+        }
