@@ -1,3 +1,5 @@
+
+
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
@@ -39,5 +41,25 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+    // Primeiro Mux, recebe a instrução.
+    Mux16(a = instruction, b = outM, sel = mux1, out = outMUX16)
+
+    //Registrador A
+    Register(in = outMUX16 ,load = loadA, out[0..14] = addressM)
+
+    //Segundo Mux, chamado de Mux 'MuxAM', por receber a saida do Registrador A e o valor de M
+    Mux(a = inM, b = addressM, sel = loadM, out = OutMuxAM)
+
+    //Program Counter(PC)
+ 	PC(in=outRegisterA ,load=loadPC ,inc = true ,reset=reset ,out[0..14] = outPC);
+ 	
+    //Registrador D
+    Register(in = outM ,load = loadD, out = outRegisterD)
+
+    //ALU2
+    ALU2(x = outRegisterD,y = OutMuxAM ,zx = zx ,nx = nx ,zy = zy ,ny = ny ,f = f ,no = no ,bs = bs , dr = dr ,out = outM, out =  ,zr = zr ,ng = ng); 
+
+    //Valor para M
+    And(a= instruction, b= instruction[3], out = writeM);
+    
 }
