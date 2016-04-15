@@ -7,19 +7,18 @@
 
 CHIP InstructionDecoder {
     IN in[16], zr, ng; // ler a instruções e demais retornos da CPU
-    OUT muxAM, zx, nx, zy, ny, f, no, loadA, loadD, loadM, loadPC; // controlar todos os modulos da CPU
+    OUT muxAM, mux1, zx, nx, zy, ny, f, no, loadA, loadD, loadM, loadPC; // controlar todos os modulos da CPU
 
     PARTS:
     //Primeiro bit indica que é um Comando
     //Pode-se ignorar segundo bit e terceiro bit
 
     //Bit 0 - Controla se é comando tipo C ou tipo A
+    Fio(in=in[0],out=mux1)
+
     //Bit 'a'
     //Controla Mux se A ou M
-
-    Not(in=in[0],out=cont);
-    Mux(a=cont,b=in[3],sel=in[0],out=MuxAM);
-
+    Fio(in=in[3],out=muxAM)
     
 
     //Bits 'C1','C2','C3','C4','C5','C6'
