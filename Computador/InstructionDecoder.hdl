@@ -6,9 +6,47 @@
  */
 
 CHIP InstructionDecoder {
-    IN ; // ler a instruções e demais retornos da CPU
-    OUT ; // controlar todos os modulos da CPU
+    IN in[16], zr, ng; // ler a instruções e demais retornos da CPU
+    OUT muxAM, zx, nx, zy, ny, f, no, loadA, loadD, loadM, loadPC; // controlar todos os modulos da CPU
 
     PARTS:
-    // Put your code here:
+    //Primeiro bit indica que é um Comando
+    //Pode-se ignorar segundo bit e terceiro bit
+
+    //Bit 0 - Controla se é comando tipo C ou tipo A
+    //Bit 'a'
+    //Controla Mux se A ou M
+
+    Not(in=in[0],out=cont);
+    Mux(a=cont,b=in[3],sel=in[0],out=MuxAM);
+
+    
+
+    //Bits 'C1','C2','C3','C4','C5','C6'
+    //Controlam zx, nx, zy, ny, f, no, respectivamente
+    Fio(in=in[4], out=zx);
+    Fio(in=in[5], out=nx);
+    Fio(in=in[6], out=zy);
+    Fio(in=in[7], out=ny);
+    Fio(in=in[8], out=f);
+    Fio(in=in[9], out=no);
+
+    //Bits 'D1','D2','D3'
+    //Controlam load do A, load do D, load do M, respectivamente, definindo o "destino" se será salvo ou não
+    Fio(in=in[10], out=loadA);
+    Fio(in=in[11], out=loadD);
+    Fio(in=in[12], out=loadM);
+
+    //Bits 'J1' = in[13], 'J2' = in[14], 'J3' = in[15]
+    //São as condições de <, =, >, respectivamente
+    //Controlam o JMP. Portanto, o load de PC assim mudando a posição do counter
+    And(a=in[13],b=zr,out=parc_a);
+    And(a=in[14],b=ng,out=parc_b);
+    Or(a=parc_a,b=parc_b,out=parc_c);
+    Not(in=ng,out=parc_ng);
+    Not(in=zr,out=parc_zr);
+    And(a=parc_ng,b=parc_zr,out=parc_d);
+    And(a=in[15],b=parc_d,out=parc_e);
+    Or(a=parc_c,b=parc_e,out=loadPC);
+
 }
