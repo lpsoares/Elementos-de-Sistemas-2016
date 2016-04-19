@@ -57,7 +57,7 @@ CHIP CPU {
     Register(in = outM ,load = loadD, out = outRegisterD)
 
     //ALU2
-    ALU2(x = outRegisterD,y = OutMuxAM ,zx = zx ,nx = nx ,zy = zy ,ny = ny ,f = f ,no = no ,bs = bs , dr = dr ,out = outM, out =  ,zr = zr ,ng = ng); 
+    ALU2(x = outRegisterD,y = OutMuxAM ,zx = zx ,nx = nx ,zy = zy ,ny = ny ,f = f ,no = no ,bs = bs , dr = dr ,out = outM ,zr = zr ,ng = ng); 
 
     //Valor para M
     And(a= instruction, b= instruction[3], out = writeM);
