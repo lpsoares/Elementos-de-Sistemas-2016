@@ -21,7 +21,7 @@ CHIP Computer {
     PARTS:
 
 
-    //recebe program counter para endereço da proxima instrucao
+    //recebe program counter para endereço da proxima instrucao.
     ROM32K(address=PC, out=instrom);
 
     //recebe instrucao da rom (instrom), in reset, conteudo da ram (memout) e retorna as saidas outM, writeM, adressM e program counter
