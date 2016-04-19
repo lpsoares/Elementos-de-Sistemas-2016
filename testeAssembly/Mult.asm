@@ -7,3 +7,38 @@
 // (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.)
 
 // Put your code here.
+
+
+@2
+M=0  // Limpa a memória
+
+// Para checar se um dos valores é 0
+@0
+D=M
+@END
+D;JEQ
+@1
+D=M
+@END
+D;JEQ
+
+
+@0
+D=M
+@3
+M=D  // Para checar o andar da multiplicação
+
+(LOOP)
+@1
+D=M
+@2
+M=D+M  // Numero mais o seu valor anterior (soma "regressiva?")
+@3
+M=M-1
+D=M
+@LOOP
+D;JGT
+
+(END)
+@END
+0;JMP // Loop
