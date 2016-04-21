@@ -1,6 +1,11 @@
-I like dogs
-Dogs are cool
+@1
+D = A
+@R1
 
-Do you want to see my dog?
+M = A
+D = A + 1
+@SCREEN
+@KBD
 
-He is amazing!
+D = M
+M = 1
