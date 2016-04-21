@@ -5,13 +5,15 @@
 #include <unordered_map>
 
 using namespace std;
+
+
 // This was made with g++ compiler and c++11 in mind
 
 string toBinary(int n) {
   // converts decimal integers into its binary equivalent as a string
   string result;
-  while(n!=0) {
-    result=(n % 2 == 0 ? "0" : "1") + result;
+  while(n != 0) {
+    result = (n % 2 == 0 ? "0" : "1") + result;
     n /= 2;
   }
   return result;
@@ -19,6 +21,7 @@ string toBinary(int n) {
 
 
 string aTypeInstruction(string line, unordered_map<string, int> map) {
+  // decodes a type instructions
   int startOfInstruction = line.find("@", 0);
   int n;
   line.erase(0, startOfInstruction + 1);
@@ -40,6 +43,29 @@ string aTypeInstruction(string line, unordered_map<string, int> map) {
   return result;
 }
 
+string clearSpacesAndComments(string line) {
+  int i = 0;
+  while(i < line.size()) {
+    if(line[i] == ' ') {
+      line.erase(i, 1);
+    } else if(line[i] == '/' && line[i + 1] == '/') {
+      line.erase(i);
+      break;
+    } else {
+      i++;
+    }
+  }
+  return line;
+}
+
+string shift(string line) {
+
+}
+
+string cTypeInstruction(string line) {
+
+}
+
 // reads the input file and returns a vector of the lines (as strings)
 vector<string> parser() {
   vector<string> inputFile;
@@ -51,6 +77,7 @@ vector<string> parser() {
   ifstream inFile(fileName);
 
   while(getline(inFile, line)) {
+    line = clearSpacesAndComments(line);
     inputFile.push_back(line);
   }
   return inputFile;
@@ -59,16 +86,15 @@ vector<string> parser() {
 void code(vector<string> file, unordered_map<string, int> map) {
   ofstream writer("code.hack");
   string result;
+
   for(string & line : file) {
     int i = 0;
+
     do {
-      switch(line[i]) {
-        cout << line[i] << endl;
-        case ' ':
-          break;
-        case '@':
-          result = aTypeInstruction(line, map);
-          i = line.size();
+      cout << line[i] << endl;
+      if(line[i] == '@') {
+        result = aTypeInstruction(line, map);
+        i = line.size();
       }
       cout << result << endl;
       i++;
