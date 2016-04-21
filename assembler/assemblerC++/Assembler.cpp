@@ -7,6 +7,17 @@
 using namespace std;
 // This was made with g++ compiler and c++11 in mind
 
+string toBinary(int n) {
+  // converts decimal integers into its binary equivalent as a string
+  string result;
+  while(n!=0) {
+    result=(n % 2 == 0 ? "0" : "1") + result;
+    n /= 2;
+  }
+  return result;
+}
+
+
 string aTypeInstruction(string line, unordered_map<string, int> map) {
   int startOfInstruction = line.find("@", 0);
   int n;
@@ -16,11 +27,17 @@ string aTypeInstruction(string line, unordered_map<string, int> map) {
     n = stoi(line);
   } catch(exception & invalid_argument) {
     int index = line.find(" ", 0);
-    if(index == -1) {
-      n = map[line];
+    if(index != -1) {
+      line.erase(index);
     }
+    n = map[line];
   }
-  return line;
+
+  string result = toBinary(n);
+  while(result.size() < 16) {
+    result.insert(0, "0");
+  }
+  return result;
 }
 
 // reads the input file and returns a vector of the lines (as strings)
@@ -41,15 +58,19 @@ vector<string> parser() {
 
 void code(vector<string> file, unordered_map<string, int> map) {
   ofstream writer("code.hack");
+  string result;
   for(string & line : file) {
     int i = 0;
     do {
       switch(line[i]) {
+        cout << line[i] << endl;
         case ' ':
           break;
         case '@':
-          aTypeInstruction(line, map);
+          result = aTypeInstruction(line, map);
+          i = line.size();
       }
+      cout << result << endl;
       i++;
     } while(i < line.size());
   }
@@ -98,6 +119,8 @@ int main() {
 
   unordered_map<string, int> map = basicSimbolTable();
   cout << map["R5"] << endl;
+
+  code(file, map);
 
   cout << "Done!" << endl;
   return 0;

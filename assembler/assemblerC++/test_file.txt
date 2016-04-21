@@ -1,11 +1,4 @@
 @1
-D = A
-@R1
-
-M = A
-D = A + 1
+@R0
 @SCREEN
 @KBD
-
-D = M
-M = 1
