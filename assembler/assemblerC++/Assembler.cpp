@@ -67,7 +67,7 @@ string shift(string expression) {
   }
 }
 
-string comp(string expression) {
+string dest(string expression) {
   if(expression == "M") {
     // Memory[A]
     return "001";
@@ -95,10 +95,84 @@ string comp(string expression) {
   }
 }
 
+string comp(string expression) {
+  // What to compute. This is pretty self explanatory
+  // soo there won't be many comments
+  if(expression == "0") {
+    return "0101010";
+  } else if(expression == "1") {
+    return "0111111";
+  } else if(expression == "-1") {
+    return "0111010";
+  } else if(expression == "D") {
+    return "0001100";
+  } else if(expression == "A") {
+    return "0110000";
+  } else if(expression == "!D") {
+    return "0001101";
+  } else if(expression == "!A") {
+    return "0110001";
+  } else if(expression == "-D") {
+    return "0001111";
+  } else if(expression == "-A") {
+    return "0110011";
+  } else if(expression == "D+1") {
+    return "0011111";
+  } else if(expression == "A+1") {
+    return "0110111";
+  } else if(expression == "D-1") {
+    return "0001110";
+  } else if(expression == "A-1") {
+    return "0110010";
+  } else if(expression == "D+A") {
+    return "0000010";
+  } else if(expression == "D-A") {
+    return "0010011";
+  } else if(expression == "A-D") {
+    return "0000111";
+  } else if(expression == "D&A") {
+    return "0000000";
+  } else if(expression == "D|A") {
+    return "0010101";
+  } else if(expression == "M") {
+    return "1110000";
+  } else if(expression == "!M") {
+    return "1110001";
+  } else if(expression == "-M") {
+    return "1110011";
+  } else if(expression == "M+1") {
+    return "1110010";
+  } else if(expression == "D+M") {
+    return "1000010";
+  } else if(expression == "D-M") {
+    return "1010011";
+  } else if(expression == "M-D") {
+    return "1000111";
+  } else if(expression == "D&M") {
+    return "1000000";
+  } else if(expression == "D|M") {
+    return "1010101";
+  } else {
+    // The best thing would be to throw an exception here
+    cout << "Comp instruction not found" << endl;
+  }
+  // after doing this I really feel like a switch statement
+  // would have been a cleaner option...
+
+}
+
+string jump(string expression) {
+
+}
+
 string cTypeInstruction(string line) {
   string instruction = "1";
   string expression = "";
   int i = 0;
+  string bs;
+  string c;
+  string d;
+  string j;
 
   // checks for the destination of the data
   while(i < line.size()) {
@@ -107,30 +181,45 @@ string cTypeInstruction(string line) {
       i++;
     } else {
       if(expression.empty()) {
-        cout << "Error, the line starts with = without a refference" << endl;
+        // The best thing would be to throw an exception here
+        cout << "Error, the line starts with = without a reference" << endl;
       }
       break;
     }
   }
 
+  i++; // This will jump the '=' or ';' sign
+  d = dest(expression);
+
   // No jump expressions
   if(line[i] == '=') {
-    i++; // This will jump the '=' sign
-    string d = comp(expression);
 
     // Checks if bitshifter is going to be activated or not
     // This next line concatenates two chars in one string
     string bitShift = {line[i], line[i + 1]};
-    string bs = shift(bitShift);
+    bs = shift(bitShift);
 
     // if a shift was done, this jumps to after it
     if(bitShift == "<<" || bitShift == ">>") {
       i += 2;
     }
 
-    // Now, we are going to compute the comp
+    // Now, we are going to get the comp
     line.erase(i);
+    c = comp(line);
+
+    // In this case, there is never going to be a jump operator
+    j = "000";
+
+  } else if(line[i] == ';') {
+
   }
+
+  // generating the final instruction
+  instruction.append(bs);
+  instruction.append(c);
+  instruction.append(d);
+  instruction.append(j);
 
 }
 
