@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
+#include <tuple>
 
 using namespace std;
 
@@ -20,26 +21,41 @@ string toBinary(int n) {
 }
 
 
-string aTypeInstruction(string line, unordered_map<string, int> map) {
-  // decodes a type instructions
-  int startOfInstruction = line.find("@", 0);
+tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int i) {
+  // decodes A type instructions
   int n;
-  line.erase(0, startOfInstruction + 1);
+  // Erases the '@'
+  line.erase(0, 1);
 
+  // If the instruction was already a number it converts it
+  // to an integer, otherwise, it searches for it in the instructions
+  // hash map
   try {
     n = stoi(line);
   } catch(exception & invalid_argument) {
-    n = map[line];
+    // First, we need to check it this is already a key at our map
+    if (map.find(line) == map.end()) {
+      // If soo, we need to give this key the value of the line it
+      // is at
+      map[line] = i;
+      n = i;
+    } else {
+      // If it's already in the map, we only need to give back
+      // its value
+      n = map[line];
+    }
   }
 
   string result = toBinary(n);
   while(result.size() < 16) {
     result.insert(0, "0");
   }
-  return result;
+  return make_tuple(result, map);
 }
 
 string clearSpacesAndComments(string line) {
+  // This function helps us clear out the given code
+  // into information that can be processed by our assembler
   int i = 0;
   while(i < line.size()) {
     if(line[i] == ' ') {
@@ -271,12 +287,12 @@ vector<string> parser() {
 void code(vector<string> file, unordered_map<string, int> map) {
   ofstream writer("code.hack");
   string result;
-
-  for(string & line : file) {
-    if(line[0] == '@') {
-      result = aTypeInstruction(line, map);
+  // string & line : file
+  for(int i = 0; i < file.size(); i++) {
+    if(file[i][0] == '@') {
+      tie(result, map) = aTypeInstruction(file[i], map, i);
     } else {
-      result = cTypeInstruction(line);
+      result = cTypeInstruction(file[i]);
     }
     writer << result << endl;
   }

@@ -2,5 +2,7 @@
 @R0
 @SCREEN
         @KBD
+@i
 // test clearSpacesAndComments
 @234
+@i
