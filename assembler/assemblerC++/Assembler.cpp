@@ -29,10 +29,6 @@ string aTypeInstruction(string line, unordered_map<string, int> map) {
   try {
     n = stoi(line);
   } catch(exception & invalid_argument) {
-    int index = line.find(" ", 0);
-    if(index != -1) {
-      line.erase(index);
-    }
     n = map[line];
   }
 
@@ -78,7 +74,9 @@ vector<string> parser() {
 
   while(getline(inFile, line)) {
     line = clearSpacesAndComments(line);
-    inputFile.push_back(line);
+    if(!line.empty()) {
+      inputFile.push_back(line);
+    }
   }
   return inputFile;
 }
@@ -88,17 +86,12 @@ void code(vector<string> file, unordered_map<string, int> map) {
   string result;
 
   for(string & line : file) {
-    int i = 0;
-
-    do {
-      cout << line[i] << endl;
-      if(line[i] == '@') {
-        result = aTypeInstruction(line, map);
-        i = line.size();
-      }
-      cout << result << endl;
-      i++;
-    } while(i < line.size());
+    if(line[0] == '@') {
+      result = aTypeInstruction(line, map);
+    } else {
+      result = cTypeInstruction(line);
+    }
+    cout << result << endl;
   }
 }
 

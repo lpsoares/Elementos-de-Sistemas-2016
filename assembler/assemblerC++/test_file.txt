@@ -1,4 +1,6 @@
 @1
 @R0
 @SCREEN
-@KBD
+        @KBD
+// test clearSpacesAndComments
+@234
