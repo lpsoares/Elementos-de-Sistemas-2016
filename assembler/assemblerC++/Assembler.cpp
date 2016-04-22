@@ -154,7 +154,7 @@ string comp(string expression) {
     return "1010101";
   } else {
     // The best thing would be to throw an exception here
-    cout << "Comp instruction not found" << endl;
+    cout << "ERROR: Comp instruction not found" << endl;
   }
   // after doing this I really feel like a switch statement
   // would have been a cleaner option...
@@ -162,17 +162,34 @@ string comp(string expression) {
 }
 
 string jump(string expression) {
-
+  if(expression == "JGT") {
+    return "001";
+  } else if(expression == "JEQ") {
+    return "010";
+  } else if(expression == "JGE") {
+    return "011";
+  } else if(expression == "JLT") {
+    return "100";
+  } else if(expression == "JNE") {
+    return "101";
+  } else if(expression == "JLE") {
+    return "110";
+  } else if(expression == "JMP") {
+    return "111";
+  } else {
+    // The best thing would be to throw an exception here
+    cout << "ERROR: Jump instruction not found" << endl;
+  }
 }
 
 string cTypeInstruction(string line) {
   string instruction = "1";
   string expression = "";
-  int i = 0;
   string bs;
   string c;
   string d;
   string j;
+  int i = 0;
 
   // checks for the destination of the data
   while(i < line.size()) {
@@ -182,7 +199,7 @@ string cTypeInstruction(string line) {
     } else {
       if(expression.empty()) {
         // The best thing would be to throw an exception here
-        cout << "Error, the line starts with = without a reference" << endl;
+        cout << "ERROR: Line starts with = or ; without a reference" << endl;
       }
       break;
     }
@@ -211,8 +228,17 @@ string cTypeInstruction(string line) {
     // In this case, there is never going to be a jump operator
     j = "000";
 
+  // Dealing with jump instructions
   } else if(line[i] == ';') {
+    // erases everything in the line from the ';' onwards
+    line.erase(i);
+    j = jump(line);
 
+    // In this case, there is never going to be a dest operator
+    d = "000";
+
+    // Same for the bitshift instruction
+    bs = "00";
   }
 
   // generating the final instruction
