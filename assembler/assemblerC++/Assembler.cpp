@@ -54,11 +54,66 @@ string clearSpacesAndComments(string line) {
   return line;
 }
 
-string shift(string line) {
+string shift(string expression) {
+  if(expression == "<<") {
+    // bitshift left
+    return "11";
+  } else if(expression == ">>") {
+    // bitshit right
+    return "10";
+  } else {
+    // no shift
+    return "00";
+  }
+}
 
+string comp(string expression) {
+  if(expression == "M") {
+    // Memory[A]
+    return "001";
+  } else if(expression == "D") {
+    // D register
+    return "010";
+  } else if(expression == "A") {
+    // A register
+    return "100";
+  } else if(expression == "MD" || expression == "DM") {
+    // Memory[A] and D register
+    return "011";
+  } else if(expression == "AD" || expression == "DA") {
+    // A register and D register
+    return "110";
+  } else if(expression == "AM" || expression == "MA") {
+    // A register and Memory[A]
+    return "101";
+  } else if(expression == "") {
+    // Value is not stored
+    return "000";
+  } else {
+    // Value is stored everywhere!
+    return "111";
+  }
 }
 
 string cTypeInstruction(string line) {
+  string instruction = "1";
+  string expression = "";
+  int i = 0;
+
+  while(i < line.size()) {
+    if(line[i] != '=') {
+      expression += line[i];
+      i++;
+    } else {
+      if(expression.empty()) {
+        cout << "Error, the line starts with = without a refference" << endl;
+      }
+      break;
+    }
+  }
+
+  string d = comp(expression);
+  expression = "";
 
 }
 
@@ -91,7 +146,7 @@ void code(vector<string> file, unordered_map<string, int> map) {
     } else {
       result = cTypeInstruction(line);
     }
-    cout << result << endl;
+    writer << result << endl;
   }
 }
 
