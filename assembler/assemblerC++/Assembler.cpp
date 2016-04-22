@@ -100,8 +100,9 @@ string cTypeInstruction(string line) {
   string expression = "";
   int i = 0;
 
+  // checks for the destination of the data
   while(i < line.size()) {
-    if(line[i] != '=') {
+    if(line[i] != '=' || line[i] != ';') {
       expression += line[i];
       i++;
     } else {
@@ -112,8 +113,24 @@ string cTypeInstruction(string line) {
     }
   }
 
-  string d = comp(expression);
-  expression = "";
+  // No jump expressions
+  if(line[i] == '=') {
+    i++; // This will jump the '=' sign
+    string d = comp(expression);
+
+    // Checks if bitshifter is going to be activated or not
+    // This next line concatenates two chars in one string
+    string bitShift = {line[i], line[i + 1]};
+    string bs = shift(bitShift);
+
+    // if a shift was done, this jumps to after it
+    if(bitShift == "<<" || bitShift == ">>") {
+      i += 2;
+    }
+
+    // Now, we are going to compute the comp
+    line.erase(i);
+  }
 
 }
 
