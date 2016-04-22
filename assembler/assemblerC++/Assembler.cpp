@@ -201,40 +201,33 @@ string jump(string expression) {
 
 string cTypeInstruction(string line) {
   string instruction = "1";
-  string expression = "";
+  string expression;
   string bs;
   string c;
   string d;
   string j;
   int i = 0;
 
-  cout << line << endl;
   // checks for the destination of the data
   while(i < line.size()) {
-    cout << line[i] << endl;
-    if(line[i] == '=' || line[i] == ';') {
+    if(line[i] != '=' && line[i] != ';') {
       expression += line[i];
       i++;
     } else {
-      if(!expression.empty()) {
+      if(expression.empty()) {
         // The best thing would be to throw an exception here
         cout << "ERROR: Line starts with = or ; without a reference" << endl;
       }
       break;
     }
   }
-
   i++; // This will jump the '=' or ';' sign
   d = dest(expression);
-  cout << line[i] << " " << i << " "<< line << endl;
   // No jump expressions
-  if(line[i] == '=') {
-    i++;
-    cout << "hi" << endl;
+  if(line[i - 1] == '=') {
     // Checks if bitshifter is going to be activated or not
     // This next line concatenates two chars in one string
     string bitShift = {line[i], line[i + 1]};
-    cout << bitShift << endl;
     bs = shift(bitShift);
 
     // if a shift was done, this jumps to after it
@@ -244,18 +237,17 @@ string cTypeInstruction(string line) {
 
     // Now, we are going to get the comp
     line.erase(0, i);
-    cout << line << endl;
     c = comp(line);
 
     // In this case, there is never going to be a jump operator
     j = "000";
 
   // Dealing with jump instructions
-  } else if(line[i] == ';') {
-    cout << "oi" << endl;
+} else if(line[i - 1] == ';') {
+    c = comp(expression);
 
     // erases everything in the line from the ';' onwards
-    line.erase(i);
+    line.erase(0, i);
     j = jump(line);
 
     // In this case, there is never going to be a dest operator
@@ -276,12 +268,12 @@ string cTypeInstruction(string line) {
 }
 
 // reads the input file and returns a vector of the lines (as strings)
-vector<string> parser() {
+tuple<vector<string>, string> parser() {
   vector<string> inputFile;
   string fileName;
   string line;
 
-  cout << "Digite o nome do arquivo de entrada" << endl;
+  cout << "Enter .asm file name here (with it's extension)" << endl;
   getline(cin, fileName);
   ifstream inFile(fileName);
 
@@ -291,11 +283,13 @@ vector<string> parser() {
       inputFile.push_back(line);
     }
   }
-  return inputFile;
+  return make_tuple(inputFile, fileName);
 }
 
-void code(vector<string> file, unordered_map<string, int> map) {
-  ofstream writer("code.hack");
+void code(vector<string> file, unordered_map<string, int> map, string fileName) {
+  fileName.erase(fileName.find('.'), fileName.size());
+  fileName.append(".hack");
+  ofstream writer(fileName);
   string result;
   // string & line : file
   for(int i = 0; i < file.size(); i++) {
@@ -343,17 +337,15 @@ unordered_map<string, int> basicSimbolTable() {
 
 
 int main() {
-  vector<string> file = parser();
-
-  for(string & line : file) {
-    cout << line << endl;
-  }
+  vector<string> file;
+  string fileName;
+  tie(file, fileName) = parser();
 
   unordered_map<string, int> map = basicSimbolTable();
-  cout << map["R5"] << endl;
 
-  code(file, map);
+  code(file, map, fileName);
 
   cout << "Done!" << endl;
+
   return 0;
 }

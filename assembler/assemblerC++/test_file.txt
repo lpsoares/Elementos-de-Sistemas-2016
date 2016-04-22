@@ -7,7 +7,7 @@
 @234
 @i
 D = A
-@3
+@3      // dog
 M =<< D
 @SCREEN
 M = D
