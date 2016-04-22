@@ -4,6 +4,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <tuple>
+#include <string.h>
 
 using namespace std;
 
@@ -207,13 +208,15 @@ string cTypeInstruction(string line) {
   string j;
   int i = 0;
 
+  cout << line << endl;
   // checks for the destination of the data
   while(i < line.size()) {
-    if(line[i] != '=' || line[i] != ';') {
+    cout << line[i] << endl;
+    if(line[i] == '=' || line[i] == ';') {
       expression += line[i];
       i++;
     } else {
-      if(expression.empty()) {
+      if(!expression.empty()) {
         // The best thing would be to throw an exception here
         cout << "ERROR: Line starts with = or ; without a reference" << endl;
       }
@@ -223,13 +226,15 @@ string cTypeInstruction(string line) {
 
   i++; // This will jump the '=' or ';' sign
   d = dest(expression);
-
+  cout << line[i] << " " << i << " "<< line << endl;
   // No jump expressions
   if(line[i] == '=') {
-
+    i++;
+    cout << "hi" << endl;
     // Checks if bitshifter is going to be activated or not
     // This next line concatenates two chars in one string
     string bitShift = {line[i], line[i + 1]};
+    cout << bitShift << endl;
     bs = shift(bitShift);
 
     // if a shift was done, this jumps to after it
@@ -238,7 +243,8 @@ string cTypeInstruction(string line) {
     }
 
     // Now, we are going to get the comp
-    line.erase(i);
+    line.erase(0, i);
+    cout << line << endl;
     c = comp(line);
 
     // In this case, there is never going to be a jump operator
@@ -246,6 +252,8 @@ string cTypeInstruction(string line) {
 
   // Dealing with jump instructions
   } else if(line[i] == ';') {
+    cout << "oi" << endl;
+
     // erases everything in the line from the ';' onwards
     line.erase(i);
     j = jump(line);
@@ -262,6 +270,8 @@ string cTypeInstruction(string line) {
   instruction.append(c);
   instruction.append(d);
   instruction.append(j);
+
+  return instruction;
 
 }
 
