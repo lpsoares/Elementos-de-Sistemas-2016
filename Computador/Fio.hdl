@@ -1,0 +1,15 @@
+// File name: Fio.hdl
+
+/**
+ * Conecta sem operações
+ */
+
+CHIP Fio {
+    IN in;
+    OUT out;
+
+    PARTS:
+    Not(in=in, out=parc);
+    Not(in=parc, out=out);
+
+    }
