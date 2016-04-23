@@ -1,14 +1,5 @@
-#Symbol table already defined here, for some values it's easier to use decimal values
-symbol_table = {'SCREEN':16384,'KBD':24576,'SP':0,'LCL':1,'ARG':2,'THIS':3,'THAT':4}
-
-#the line we're reading (P in Hack's Software)
-l_number = 20
-
 #Just to check whether it's a letter or not
 let = 'abcdefghijklmnopqrstuvwxyz'
-
-#starting point for new variabels
-com_count = 15
 
 def convert_assembly_to_binary(command_type,l_number,symbol,bs='11',dest='',comp='',jump=''):
 	""" This function get as arguments the commands and traslate them into
