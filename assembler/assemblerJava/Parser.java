@@ -11,15 +11,6 @@ public class Parser {
     private ArrayList<String> asm = new ArrayList<>();
     private int linha;
     private String input;
-    private int[] destInput = {000,001,010,011,100,101,110,111};
-    private String[] destOutput = {null,"M","D","MD","A","AM","AD","AMD"};
-    private int[] compInput = {101010,111111,111010,001100,110000,001101,110001,001111,
-                               110011,011111,110111,001110,110010,00010,010011,000111,000000,010101};
-    private String[] compOutput = {"0","1","-1","D","A","!D","!A","-D","-A","D+1","A+1","D-1","A-1",
-                                   "D+A","D-A","A-D","D%A","D|A"};
-
-    private int[] jumpInput = {000,001,010,011,100,101,110,111};
-    private String[] jumpOutput = {null,"JGT","JEQ","JGE","JLT","JNE","JLE","JMP"};
 
     public Parser (String path) throws IOException {
         String linha;
