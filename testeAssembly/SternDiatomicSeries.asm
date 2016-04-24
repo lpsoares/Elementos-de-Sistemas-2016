@@ -1,10 +1,35 @@
-// Luciano Soares
-// File name: SternDiatomicSeries.asm
-
-// Le a quantidade de valores da RAM[0] e grava a sequencia de números 
-// da Sequencia Diatomica de Stern nas posições seguintes RAM[1], RAM[2], etc....
-// Por exemplo: se RAM[0]=6
-// RAM[1]=0, RAM[2]=1, RAM[3]=1, RAM[4]=2, RAM[5]=1, RAM[6]=3
-// Maiores informações em: https://oeis.org/A002487
-
-// Put your code here.
+@2
+D=A
+@1000
+M=D
+@1
+D=A
+@1001
+M=D
+@0
+M=0
+@1
+M=1
+(loop)
+@1001
+A=M
+D=M
+@1000
+A=M
+M=D
+@1000
+M=M+1
+@1001
+A=M
+D=M
+A=A+1
+D=D+M
+@1000
+A=M
+M=D
+@1000
+M=M+1
+@1001
+M=M+1
+@loop
+0;JMP
