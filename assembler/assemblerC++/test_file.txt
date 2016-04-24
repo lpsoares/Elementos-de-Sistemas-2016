@@ -1,0 +1,14 @@
+@1
+@R0
+@SCREEN
+        @KBD
+@i
+// test clearSpacesAndComments
+@234
+@i
+D = A
+@3      // dog
+M =<< D
+@SCREEN
+M = D
+0;JMP
