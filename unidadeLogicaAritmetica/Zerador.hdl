@@ -1,0 +1,7 @@
+CHIP Zerador {
+    IN a[16], sel;
+    OUT out[16];
+
+    PARTS:
+      Mux16(a=a, b=false, sel=sel, out=out);
+    }

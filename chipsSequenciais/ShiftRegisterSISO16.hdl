@@ -1,0 +1,24 @@
+CHIP ShiftRegisterSISO16 {
+    IN in ;
+    OUT out;
+
+    PARTS:
+    DFF(in = in, out = out1);
+    DFF(in = out1, out = out2);
+    DFF(in = out2, out = out3);
+    DFF(in = out3, out = out4);
+    DFF(in = out4, out = out5);
+    DFF(in = out5, out = out6);
+    DFF(in = out6, out = out7);
+    DFF(in = out7, out = out8);
+    DFF(in = out8, out = out9);
+    DFF(in = out9, out = out10);
+    DFF(in = out10, out = out11);
+    DFF(in = out11, out = out12);
+    DFF(in = out12, out = out13);
+    DFF(in = out13, out = out14);
+    DFF(in = out14, out = out15);
+    DFF(in = out15, out = out);
+
+ }
+

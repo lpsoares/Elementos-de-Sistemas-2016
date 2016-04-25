@@ -1,0 +1,38 @@
+CHIP Register32 {
+    IN in[32], load;
+    OUT out[32];
+
+    PARTS:
+    Bit(in=in[0],load=load,out=out[0]);
+    Bit(in=in[1],load=load,out=out[1]);
+    Bit(in=in[2],load=load,out=out[2]);
+    Bit(in=in[3],load=load,out=out[3]);
+    Bit(in=in[4],load=load,out=out[4]);
+    Bit(in=in[5],load=load,out=out[5]);
+    Bit(in=in[6],load=load,out=out[6]);
+    Bit(in=in[7],load=load,out=out[7]);
+    Bit(in=in[8],load=load,out=out[8]);
+    Bit(in=in[9],load=load,out=out[9]);
+    Bit(in=in[10],load=load,out=out[10]);
+    Bit(in=in[11],load=load,out=out[11]);
+    Bit(in=in[12],load=load,out=out[12]);
+    Bit(in=in[13],load=load,out=out[13]);
+    Bit(in=in[14],load=load,out=out[14]);
+    Bit(in=in[15],load=load,out=out[15]);
+    Bit(in=in[16],load=load,out=out[16]);
+    Bit(in=in[17],load=load,out=out[17]);
+    Bit(in=in[18],load=load,out=out[18]);
+    Bit(in=in[19],load=load,out=out[19]);
+    Bit(in=in[20],load=load,out=out[20]);
+    Bit(in=in[21],load=load,out=out[21]);
+    Bit(in=in[22],load=load,out=out[22]);
+    Bit(in=in[23],load=load,out=out[23]);
+    Bit(in=in[24],load=load,out=out[24]);
+    Bit(in=in[25],load=load,out=out[25]);
+    Bit(in=in[26],load=load,out=out[26]);
+    Bit(in=in[27],load=load,out=out[27]);
+    Bit(in=in[28],load=load,out=out[28]);
+    Bit(in=in[29],load=load,out=out[29]);
+    Bit(in=in[30],load=load,out=out[30]);
+    Bit(in=in[31],load=load,out=out[31]);
+}

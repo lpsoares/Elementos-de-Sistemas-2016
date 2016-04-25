@@ -1,0 +1,8 @@
+CHIP Negador {
+    IN in[16], sel;
+    OUT out[16];
+
+    PARTS:
+    Not16(in=in, out=saida);
+    Mux16(a=in, b=saida, sel=sel, out=out);
+}
