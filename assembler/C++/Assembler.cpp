@@ -22,7 +22,7 @@ string toBinary(int n) {
 }
 
 
-tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int i) {
+tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int &memoryCounter) {
   // decodes A type instructions
   int n;
   // Erases the '@'
@@ -31,6 +31,7 @@ tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordere
   // If the instruction was already a number it converts it
   // to an integer, otherwise, it searches for it in the instructions
   // hash map
+
   try {
     n = stoi(line);
   } catch(exception & invalid_argument) {
@@ -38,8 +39,9 @@ tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordere
     if (map.find(line) == map.end()) {
       // If soo, we need to give this key the value of the line it
       // is at
-      map[line] = i;
-      n = i;
+      map[line] = memoryCounter;
+      n = memoryCounter;
+      memoryCounter++;
     } else {
       // If it's already in the map, we only need to give back
       // its value
@@ -133,23 +135,23 @@ string comp(string expression) {
     return "0001111";
   } else if(expression == "-A") {
     return "0110011";
-  } else if(expression == "D+1") {
+  } else if(expression == "D+1" || expression == "1+D") {
     return "0011111";
-  } else if(expression == "A+1") {
+  } else if(expression == "A+1" || expression == "1+A") {
     return "0110111";
   } else if(expression == "D-1") {
     return "0001110";
   } else if(expression == "A-1") {
     return "0110010";
-  } else if(expression == "D+A") {
+  } else if(expression == "D+A" || expression == "A+D") {
     return "0000010";
   } else if(expression == "D-A") {
     return "0010011";
   } else if(expression == "A-D") {
     return "0000111";
-  } else if(expression == "D&A") {
+  } else if(expression == "D&A" || expression == "A&D") {
     return "0000000";
-  } else if(expression == "D|A") {
+  } else if(expression == "D|A" || expression == "A|D") {
     return "0010101";
   } else if(expression == "M") {
     return "1110000";
@@ -159,15 +161,15 @@ string comp(string expression) {
     return "1110011";
   } else if(expression == "M+1") {
     return "1110010";
-  } else if(expression == "D+M") {
+  } else if(expression == "D+M" || expression == "M+D") {
     return "1000010";
   } else if(expression == "D-M") {
     return "1010011";
   } else if(expression == "M-D") {
     return "1000111";
-  } else if(expression == "D&M") {
+  } else if(expression == "D&M" || expression == "M&D") {
     return "1000000";
-  } else if(expression == "D|M") {
+  } else if(expression == "D|M" || expression == "M|D") {
     return "1010101";
   } else {
     // The best thing would be to throw an exception here
@@ -286,19 +288,43 @@ tuple<vector<string>, string> parser() {
   return make_tuple(inputFile, fileName);
 }
 
+void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
+  // Clear the "(" and the ")"
+  line.erase(0, 1);
+  line.pop_back();
+
+  map[line] = i;
+}
+
 void code(vector<string> file, unordered_map<string, int> map, string fileName) {
+  // Finds out where the "." is in the input file string
+  // and then changes everything after it for ".hack", which
+  // is our binary file extension
   fileName.erase(fileName.find('.'), fileName.size());
   fileName.append(".hack");
+
+  // Generates the output file, ready to be written
   ofstream writer(fileName);
   string result;
-  // string & line : file
+
+  // Creates a memory counter for the new variables that may be created
+  int memoryCounter = 16;
+
+  // Writes on the output file based on the found instruction
+  // for each line
   for(int i = 0; i < file.size(); i++) {
     if(file[i][0] == '@') {
-      tie(result, map) = aTypeInstruction(file[i], map, i);
+      tie(result, map) = aTypeInstruction(file[i], map, memoryCounter);
+    } else if(file[i][0] == '(') {
+      result = "null";
+      lTypeInstruction(file[i], map, i);
     } else {
       result = cTypeInstruction(file[i]);
     }
-    writer << result << endl;
+
+    if(result != "null") {
+      writer << result << endl;
+    }
   }
 }
 
