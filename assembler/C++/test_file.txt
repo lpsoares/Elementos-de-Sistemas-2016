@@ -1,5 +1,6 @@
 @1
 @R0
+@COOL
 @SCREEN
         @KBD
 @i
@@ -12,3 +13,10 @@ M =<< D
 @SCREEN
 M = D
 0;JMP
+(COOL)
+@COOL
+(CRAZY)
+@CRAZY
+@i
+@j
+@k
