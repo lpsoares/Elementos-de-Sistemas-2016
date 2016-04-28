@@ -21,6 +21,14 @@ string toBinary(int n) {
   return result;
 }
 
+void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
+  // Clear the "(" and the ")"
+  line.erase(0, 1);
+  line.pop_back();
+
+  map[line] = i + 1;
+  cout << line << " " << i << " " << map[line] << endl;
+}
 
 tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int &memoryCounter) {
   // decodes A type instructions
@@ -56,7 +64,7 @@ tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordere
   return make_tuple(result, map);
 }
 
-string clearSpacesAndComments(string line) {
+string clearSpacesAndComments(string line, unordered_map<string, int> &map, int lineCounter) {
   // This function helps us clear out the given code
   // into information that can be processed by our assembler
   int i = 0;
@@ -64,6 +72,10 @@ string clearSpacesAndComments(string line) {
     if(line[i] == ' ') {
       line.erase(i, 1);
     } else if(line[i] == '/' && line[i + 1] == '/') {
+      line.erase(i);
+      break;
+    } else if(line[i] == '(') {
+      lTypeInstruction(line, map, lineCounter);
       line.erase(i);
       break;
     } else {
@@ -270,31 +282,29 @@ string cTypeInstruction(string line) {
 }
 
 // reads the input file and returns a vector of the lines (as strings)
-tuple<vector<string>, string> parser() {
+tuple<vector<string>, string> parser(unordered_map<string, int> &map) {
   vector<string> inputFile;
   string fileName;
   string line;
+  int lineCounter = 0;
+  cout << map["R1"] << endl;
 
   cout << "Enter .asm file name here (with it's extension)" << endl;
   getline(cin, fileName);
   ifstream inFile(fileName);
 
   while(getline(inFile, line)) {
-    line = clearSpacesAndComments(line);
+    line = clearSpacesAndComments(line, map, lineCounter);
     if(!line.empty()) {
+      cout << lineCounter << endl;
+      cout << map["COOL"] << endl;
       inputFile.push_back(line);
+      lineCounter++;
     }
   }
   return make_tuple(inputFile, fileName);
 }
 
-void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
-  // Clear the "(" and the ")"
-  line.erase(0, 1);
-  line.pop_back();
-
-  map[line] = i;
-}
 
 void code(vector<string> file, unordered_map<string, int> map, string fileName) {
   // Finds out where the "." is in the input file string
@@ -315,16 +325,11 @@ void code(vector<string> file, unordered_map<string, int> map, string fileName) 
   for(int i = 0; i < file.size(); i++) {
     if(file[i][0] == '@') {
       tie(result, map) = aTypeInstruction(file[i], map, memoryCounter);
-    } else if(file[i][0] == '(') {
-      result = "null";
-      lTypeInstruction(file[i], map, i);
     } else {
       result = cTypeInstruction(file[i]);
     }
 
-    if(result != "null") {
-      writer << result << endl;
-    }
+    writer << result << endl;
   }
 }
 
@@ -365,12 +370,17 @@ unordered_map<string, int> basicSimbolTable() {
 int main() {
   vector<string> file;
   string fileName;
-  tie(file, fileName) = parser();
 
   unordered_map<string, int> map = basicSimbolTable();
 
+  tie(file, fileName) = parser(map);
+
+
+  cout << "dog" << map["CRAZY"] << endl;
+
   code(file, map, fileName);
 
+  cout << map["COOL"] << endl;
   cout << "Done!" << endl;
 
   return 0;
