@@ -27,7 +27,6 @@ void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
   line.pop_back();
 
   map[line] = i + 1;
-  cout << line << " " << i << " " << map[line] << endl;
 }
 
 tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int &memoryCounter) {
@@ -68,8 +67,8 @@ string clearSpacesAndComments(string line, unordered_map<string, int> &map, int 
   // This function helps us clear out the given code
   // into information that can be processed by our assembler
   int i = 0;
-  while(i < line.size()) {
-    if(line[i] == ' ') {
+  while(i <= line.size()) {
+    if(isspace(line[i])) {
       line.erase(i, 1);
     } else if(line[i] == '/' && line[i + 1] == '/') {
       line.erase(i);
@@ -173,6 +172,8 @@ string comp(string expression) {
     return "1110011";
   } else if(expression == "M+1") {
     return "1110010";
+  } else if(expression == "M-1") {
+    return "1110011";
   } else if(expression == "D+M" || expression == "M+D") {
     return "1000010";
   } else if(expression == "D-M") {
@@ -185,7 +186,13 @@ string comp(string expression) {
     return "1010101";
   } else {
     // The best thing would be to throw an exception here
-    cout << "ERROR: Comp instruction not found" << endl;
+    cout << "ERROR: Comp instruction not found: " << expression << endl;
+    cout << "String length " << expression.length() << endl;
+    char a = ' ';
+    cout << (int) a << endl;
+    for(char c : expression) {
+      cout << (int) c << c << endl;
+    }
   }
   // after doing this I really feel like a switch statement
   // would have been a cleaner option...
@@ -287,7 +294,6 @@ tuple<vector<string>, string> parser(unordered_map<string, int> &map) {
   string fileName;
   string line;
   int lineCounter = 0;
-  cout << map["R1"] << endl;
 
   cout << "Enter .asm file name here (with it's extension)" << endl;
   getline(cin, fileName);
@@ -296,8 +302,6 @@ tuple<vector<string>, string> parser(unordered_map<string, int> &map) {
   while(getline(inFile, line)) {
     line = clearSpacesAndComments(line, map, lineCounter);
     if(!line.empty()) {
-      cout << lineCounter << endl;
-      cout << map["COOL"] << endl;
       inputFile.push_back(line);
       lineCounter++;
     }
@@ -375,12 +379,8 @@ int main() {
 
   tie(file, fileName) = parser(map);
 
-
-  cout << "dog" << map["CRAZY"] << endl;
-
   code(file, map, fileName);
 
-  cout << map["COOL"] << endl;
   cout << "Done!" << endl;
 
   return 0;
