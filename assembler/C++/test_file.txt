@@ -14,7 +14,7 @@
 @i
 D = A
 @3      // dog
-M =<< D
+M = D
 @SCREEN
 M = D
 0;JMP
