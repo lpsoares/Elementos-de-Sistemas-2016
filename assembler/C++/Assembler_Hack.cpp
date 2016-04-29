@@ -24,9 +24,12 @@ string toBinary(int n) {
 void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
   // Clear the "(" and the ")"
   line.erase(0, 1);
-  line.pop_back();
+  line.erase(line.length() - 2, 1);
+  cout << line << endl;
 
-  map[line] = i + 1;
+  map[line] = i;
+  cout << map[line] << endl;
+  cout << map["LOOP"] << endl;
 }
 
 tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int &memoryCounter) {
@@ -57,6 +60,7 @@ tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordere
   }
 
   string result = toBinary(n);
+
   while(result.size() < 16) {
     result.insert(0, "0");
   }
@@ -74,8 +78,10 @@ string clearSpacesAndComments(string line, unordered_map<string, int> &map, int 
       line.erase(i);
       break;
     } else if(line[i] == '(') {
+      cout << "L-Type" << endl;
       lTypeInstruction(line, map, lineCounter);
       line.erase(i);
+      cout << map["LOOP"] << endl;
       break;
     } else {
       i++;
@@ -174,12 +180,6 @@ string comp(string expression) {
   } else {
     // The best thing would be to throw an exception here
     cout << "ERROR: Comp instruction not found: " << expression << endl;
-    cout << "String length " << expression.length() << endl;
-    char a = ' ';
-    cout << (int) a << endl;
-    for(char c : expression) {
-      cout << (int) c << c << endl;
-    }
   }
   // after doing this I really feel like a switch statement
   // would have been a cleaner option...
@@ -278,11 +278,13 @@ tuple<vector<string>, string> parser(unordered_map<string, int> &map) {
       lineCounter++;
     }
   }
+  cout << map["LOOP"] << endl;
+  cout << "parser" << endl;
   return make_tuple(inputFile, fileName);
 }
 
 
-void code(vector<string> file, unordered_map<string, int> map, string fileName) {
+void code(vector<string> file, unordered_map<string, int> &map, string fileName) {
   // Finds out where the "." is in the input file string
   // and then changes everything after it for ".hack", which
   // is our binary file extension
@@ -311,9 +313,7 @@ void code(vector<string> file, unordered_map<string, int> map, string fileName) 
 
 
 // Creates the basic simbols table
-unordered_map<string, int> basicSimbolTable() {
-  unordered_map<string, int> map;
-
+void basicSimbolTable(unordered_map<string, int> &map) {
   map["R0"] = 0;
   map["R1"] = 1;
   map["R2"] = 2;
@@ -337,8 +337,6 @@ unordered_map<string, int> basicSimbolTable() {
   map["ARG"] = 2;
   map["THIS"] = 3;
   map["THAT"] = 4;
-
-  return map;
 }
 
 
@@ -346,8 +344,9 @@ unordered_map<string, int> basicSimbolTable() {
 int main() {
   vector<string> file;
   string fileName;
+  unordered_map<string, int> map;
 
-  unordered_map<string, int> map = basicSimbolTable();
+  basicSimbolTable(map);
 
   tie(file, fileName) = parser(map);
 
