@@ -24,12 +24,9 @@ string toBinary(int n) {
 void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
   // Clear the "(" and the ")"
   line.erase(0, 1);
-  line.erase(line.length() - 2, 1);
-  cout << line << endl;
+  line.erase(line.length() - 2, 2);
 
   map[line] = i;
-  cout << map[line] << endl;
-  cout << map["LOOP"] << endl;
 }
 
 tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int &memoryCounter) {
@@ -78,10 +75,8 @@ string clearSpacesAndComments(string line, unordered_map<string, int> &map, int 
       line.erase(i);
       break;
     } else if(line[i] == '(') {
-      cout << "L-Type" << endl;
       lTypeInstruction(line, map, lineCounter);
       line.erase(i);
-      cout << map["LOOP"] << endl;
       break;
     } else {
       i++;
@@ -160,13 +155,13 @@ string comp(string expression) {
   } else if(expression == "M") {
     return "1110000";
   } else if(expression == "!M") {
-    return "1110001";
+    return "1110011";
   } else if(expression == "-M") {
     return "1110011";
   } else if(expression == "M+1") {
-    return "1110010";
+    return "1110111";
   } else if(expression == "M-1") {
-    return "1110011";
+    return "1110010";
   } else if(expression == "D+M" || expression == "M+D") {
     return "1000010";
   } else if(expression == "D-M") {
@@ -278,8 +273,6 @@ tuple<vector<string>, string> parser(unordered_map<string, int> &map) {
       lineCounter++;
     }
   }
-  cout << map["LOOP"] << endl;
-  cout << "parser" << endl;
   return make_tuple(inputFile, fileName);
 }
 
