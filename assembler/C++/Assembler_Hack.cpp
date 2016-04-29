@@ -24,9 +24,9 @@ string toBinary(int n) {
 void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
   // Clear the "(" and the ")"
   line.erase(0, 1);
-  line.pop_back();
+  line.erase(line.length() - 2, 2);
 
-  map[line] = i + 1;
+  map[line] = i;
 }
 
 tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordered_map<string, int> map, int &memoryCounter) {
@@ -57,6 +57,7 @@ tuple<string, unordered_map<string, int>> aTypeInstruction(string line, unordere
   }
 
   string result = toBinary(n);
+
   while(result.size() < 16) {
     result.insert(0, "0");
   }
@@ -82,19 +83,6 @@ string clearSpacesAndComments(string line, unordered_map<string, int> &map, int 
     }
   }
   return line;
-}
-
-string shift(string expression) {
-  if(expression == "<<") {
-    // bitshift left
-    return "11";
-  } else if(expression == ">>") {
-    // bitshit right
-    return "10";
-  } else {
-    // no shift
-    return "00";
-  }
 }
 
 string dest(string expression) {
@@ -167,13 +155,13 @@ string comp(string expression) {
   } else if(expression == "M") {
     return "1110000";
   } else if(expression == "!M") {
-    return "1110001";
+    return "1110011";
   } else if(expression == "-M") {
     return "1110011";
   } else if(expression == "M+1") {
-    return "1110010";
+    return "1110111";
   } else if(expression == "M-1") {
-    return "1110011";
+    return "1110010";
   } else if(expression == "D+M" || expression == "M+D") {
     return "1000010";
   } else if(expression == "D-M") {
@@ -187,12 +175,6 @@ string comp(string expression) {
   } else {
     // The best thing would be to throw an exception here
     cout << "ERROR: Comp instruction not found: " << expression << endl;
-    cout << "String length " << expression.length() << endl;
-    char a = ' ';
-    cout << (int) a << endl;
-    for(char c : expression) {
-      cout << (int) c << c << endl;
-    }
   }
   // after doing this I really feel like a switch statement
   // would have been a cleaner option...
@@ -221,9 +203,8 @@ string jump(string expression) {
 }
 
 string cTypeInstruction(string line) {
-  string instruction = "1";
+  string instruction = "111";
   string expression;
-  string bs;
   string c;
   string d;
   string j;
@@ -246,16 +227,6 @@ string cTypeInstruction(string line) {
   d = dest(expression);
   // No jump expressions
   if(line[i - 1] == '=') {
-    // Checks if bitshifter is going to be activated or not
-    // This next line concatenates two chars in one string
-    string bitShift = {line[i], line[i + 1]};
-    bs = shift(bitShift);
-
-    // if a shift was done, this jumps to after it
-    if(bitShift == "<<" || bitShift == ">>") {
-      i += 2;
-    }
-
     // Now, we are going to get the comp
     line.erase(0, i);
     c = comp(line);
@@ -273,13 +244,9 @@ string cTypeInstruction(string line) {
 
     // In this case, there is never going to be a dest operator
     d = "000";
-
-    // Same for the bitshift instruction
-    bs = "00";
   }
 
   // generating the final instruction
-  instruction.append(bs);
   instruction.append(c);
   instruction.append(d);
   instruction.append(j);
@@ -310,7 +277,7 @@ tuple<vector<string>, string> parser(unordered_map<string, int> &map) {
 }
 
 
-void code(vector<string> file, unordered_map<string, int> map, string fileName) {
+void code(vector<string> file, unordered_map<string, int> &map, string fileName) {
   // Finds out where the "." is in the input file string
   // and then changes everything after it for ".hack", which
   // is our binary file extension
@@ -339,9 +306,7 @@ void code(vector<string> file, unordered_map<string, int> map, string fileName) 
 
 
 // Creates the basic simbols table
-unordered_map<string, int> basicSimbolTable() {
-  unordered_map<string, int> map;
-
+void basicSimbolTable(unordered_map<string, int> &map) {
   map["R0"] = 0;
   map["R1"] = 1;
   map["R2"] = 2;
@@ -365,8 +330,6 @@ unordered_map<string, int> basicSimbolTable() {
   map["ARG"] = 2;
   map["THIS"] = 3;
   map["THAT"] = 4;
-
-  return map;
 }
 
 
@@ -374,8 +337,9 @@ unordered_map<string, int> basicSimbolTable() {
 int main() {
   vector<string> file;
   string fileName;
+  unordered_map<string, int> map;
 
-  unordered_map<string, int> map = basicSimbolTable();
+  basicSimbolTable(map);
 
   tie(file, fileName) = parser(map);
 
