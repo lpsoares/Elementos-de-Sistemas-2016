@@ -24,7 +24,7 @@ string toBinary(int n) {
 void lTypeInstruction(string line, unordered_map<string, int> &map, int i){
   // Clear the "(" and the ")"
   line.erase(0, 1);
-  line.erase(line.length() - 2, 2);
+  line.erase(line.find(')'), 2);
 
   map[line] = i;
 }
