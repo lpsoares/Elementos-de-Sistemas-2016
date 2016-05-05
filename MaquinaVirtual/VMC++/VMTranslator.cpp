@@ -13,40 +13,46 @@ class Parser {
         Parser();
 
     private:
-        void clearSpacesAndComments(string &line, int lineCounter);
+        int lineCounter;
+        string line;
+        void clearSpacesAndComments(string line, int lineCounter);
 
 
 };
 
-Parser::Parser(void) {
+Parser::Parser() {
     // The Constructor itself
     vector<string> inputFile;
     string fileName;
-    string line;
-    int lineCounter = 0;
+    this -> lineCounter = 0;
 
     cout << "Enter .vm file name here (with it's extension)" << endl;
     getline(cin, fileName);
     ifstream inFile(fileName);
 
-    while(getline(inFile, line)) {
-        crearSpacesAndComments(line, lineCounter);
+    while(getline(inFile, this -> line)) {
+        // First, we gotta clear the line from any space or comment
+        this -> clearSpacesAndComments(line, lineCounter);
+        // Then, if there is still something left in it, we shall append
+        // it to the end of our list
         if(!line.empty()) {
             inputFile.push_back(line);
             cout << line << endl;
-            lineCounter++;
+            this -> lineCounter++;
         }
     }
 }
 
-void Parser::clearSpacesAndComments(string &line, int lineCounter) {
+void Parser::clearSpacesAndComments(string line, int lineCounter) {
     // Clears the line of any possible space or comment on it (if existent)
+    this -> line = line;
+    this -> lineCounter = lineCounter;
     int i = 0;
-    while(i <= line.size()) {
-        if(isspace(line[i])) {
-            line.erase(i, 1);
-        } else if(line[i] == '/' && line[i+1] == '/') {
-            line.erase(i);
+    while(i <= this -> line.size()) {
+        if(isspace(this -> line[i])) {
+            this -> line.erase(i, 1);
+        } else if((this -> line[i] == '/') && (this -> line[i+1] == '/')) {
+            this -> line.erase(i);
             break;
         } else {
             i++;
@@ -55,6 +61,8 @@ void Parser::clearSpacesAndComments(string &line, int lineCounter) {
 }
 
 int main() {
+    Parser* parser= new Parser();
+
     cout << "Done!" << endl;
     return 0;
 }
