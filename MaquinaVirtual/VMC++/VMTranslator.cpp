@@ -16,8 +16,6 @@ class Parser {
     private:
         int lineCounter;
         string line;
-        string command;
-        string finalCommand;
         void clearSpacesAndComments();
         void arg1();
         void arg2();
@@ -27,23 +25,34 @@ class Parser {
 Parser::Parser() {
     // The Constructor itself
     vector<string> inputFile;
-    string fileName;
-    this -> lineCounter = 0;
+    string fileName, dirName;
+    string entry;
 
-    cout << "Enter .vm file name here (with it's extension) or a directory's name" << endl;
-    getline(cin, fileName);
-    ifstream inFile(fileName);
+    cout << "Are you entering a file or a directory name? [F/d]" << endl;
+    getline(cin, entry);
 
-    while(getline(inFile, this -> line)) {
-        // First, we gotta clear the line from any space or comment
-        this -> clearSpacesAndComments();
-        // Then, if there is still something left in it, we shall append
-        // it to the end of our list
-        if(!line.empty()) {
-            cout << this -> line << endl;
-            inputFile.push_back(this -> line);
-            this -> lineCounter++;
+    if(entry != "D" || entry != "d") {
+        this -> lineCounter = 0;
+        cout << "Enter .vm file name here (with it's extension):" << endl;
+        getline(cin, fileName);
+        ifstream inFile(fileName);
+
+        while(getline(inFile, this -> line)) {
+            // First, we gotta clear the line from any space or comment
+            this -> clearSpacesAndComments();
+            // Then, if there is still something left in it, we shall append
+            // it to the end of our list
+            if(!line.empty()) {
+                cout << this -> line << endl;
+                inputFile.push_back(this -> line);
+                this -> commandType();
+                // TODO: Do something with the information we just gathered
+                this -> lineCounter++;
+            }
         }
+    } else {
+        cout << "Enter the directory name here:" << endl;
+        getline(cin, dirName);
     }
 }
 
@@ -51,8 +60,10 @@ void Parser::clearSpacesAndComments() {
     // Clears the line of any possible space or comment on it (if existent)
     int i = 0;
     while(i <= this -> line.size()) {
+        // Checks for empty spaces
         if(isspace(this -> line[i])) {
             this -> line.erase(i, 1);
+        // Checks for comments
         } else if((this -> line[i] == '/') && (this -> line[i+1] == '/')) {
             this -> line.erase(i);
             break;
@@ -74,8 +85,6 @@ string Parser::commandType() {
     // Evaluates the line string (already cleaned) to check for which kind of
     // of operator we have
     string line = this -> line;
-    cout << "hai" << endl;
-
     if(line == "add" || line == "sub" || line == "neg" || line == "eq" || line == "gt" || line == "lt" || line == "and" || line == "or" || line == "not") {
         return "C_ARITHMETIC";
     } else if(line.find("pop") != string::npos) {
