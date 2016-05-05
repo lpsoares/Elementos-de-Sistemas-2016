@@ -7,13 +7,18 @@
 using namespace std;
 
 class Parser {
-    // Constructor, opens the file and gets it ready to be
-    // parsed
-    Parser();
+    public:
+        // Constructor, opens the file and gets it ready to be
+        // parsed
+        Parser();
 
-}
+    private:
+        void clearSpacesAndComments(string &line, int lineCounter);
 
-Parser::Parser(unordered_map<string, int> map) {
+
+};
+
+Parser::Parser(void) {
     // The Constructor itself
     vector<string> inputFile;
     string fileName;
@@ -25,7 +30,27 @@ Parser::Parser(unordered_map<string, int> map) {
     ifstream inFile(fileName);
 
     while(getline(inFile, line)) {
-        line = crearSpacesAndComments(line, map, lineCounter);
+        crearSpacesAndComments(line, lineCounter);
+        if(!line.empty()) {
+            inputFile.push_back(line);
+            cout << line << endl;
+            lineCounter++;
+        }
+    }
+}
+
+void Parser::clearSpacesAndComments(string &line, int lineCounter) {
+    // Clears the line of any possible space or comment on it (if existent)
+    int i = 0;
+    while(i <= line.size()) {
+        if(isspace(line[i])) {
+            line.erase(i, 1);
+        } else if(line[i] == '/' && line[i+1] == '/') {
+            line.erase(i);
+            break;
+        } else {
+            i++;
+        }
     }
 }
 

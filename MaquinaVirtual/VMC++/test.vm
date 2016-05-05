@@ -1,0 +1,11 @@
+push constant 1 // Lmao
+pop temp 0
+push constant 3
+push constant 4
+add
+push temp 0
+add
+
+// Test comment
+// Beep
+        // Boop
