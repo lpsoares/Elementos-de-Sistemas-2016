@@ -64,18 +64,7 @@ void Parser::clearSpacesAndComments() {
 }
 
 void Parser::arg1() {
-    if(this -> command == "C_ARITHMETIC") {
-        this -> finalCommand = this -> line;
-    } else if(this -> command == "C_PUSH") {
-        this -> line = line.erase(0, 4);
-        this -> arg2();
-    } else if(this -> command == "C_POP") {
-        this -> line = line.erase(0, 3);
-        this -> arg2();
-    } else if(this -> command == "C_LABEL") {
-    }
 
-    this -> line = line;
 }
 
 void Parser::arg2() {
@@ -83,6 +72,30 @@ void Parser::arg2() {
 }
 
 string commandType() {
+    // Evaluates the line string (already cleaned) to check for which kind of
+    // of operator we have
+    line = this -> line;
+    if(line == "add" || line == "sub" || line == "neg" || line == "eq" || line == "gt" || line == "lt" || line == "and" || line == "or" || line == "not") {
+        return "C_ARITHMETIC";
+    } else if(line.find("pop") != string::npos) {
+        return "C_POP";
+    } else if(line.find("push") != string::npos) {
+        return "C_PUSH";
+    } else if(line.find("label") != string::npos) {
+        return "C_LABEL";
+    } else if(line.find("funcion") != string::npos) {
+        return "C_FUNCTION";
+    } else if(line.find("if-goto") != string::npos) {
+        return "C_IF;"
+    } else if(line.find("goto") != string::npos) {
+        return "C_GOTO";
+    } else if(line.find("call") != string::npos) {
+        return "C_CALL";
+    } else if(line.find("return") != string::npos) {
+        return "C_RETURN";
+    } else {
+        cout << "ERROR: Command type not found" << endl;
+    }
 }
 
 int main() {
