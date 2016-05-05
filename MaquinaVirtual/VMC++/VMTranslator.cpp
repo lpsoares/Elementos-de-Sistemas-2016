@@ -11,11 +11,14 @@ class Parser {
         // Constructor, opens the file and gets it ready to be
         // parsed
         Parser();
+        string commandType(string);
 
     private:
         int lineCounter;
         string line;
-        void clearSpacesAndComments(string line, int lineCounter);
+        string command;
+        void clearSpacesAndComments(string, int);
+        void arg1(string line);
 
 
 };
@@ -26,7 +29,7 @@ Parser::Parser() {
     string fileName;
     this -> lineCounter = 0;
 
-    cout << "Enter .vm file name here (with it's extension)" << endl;
+    cout << "Enter .vm file name here (with it's extension) or a directory's name" << endl;
     getline(cin, fileName);
     ifstream inFile(fileName);
 
@@ -36,8 +39,8 @@ Parser::Parser() {
         // Then, if there is still something left in it, we shall append
         // it to the end of our list
         if(!line.empty()) {
-            inputFile.push_back(line);
-            cout << line << endl;
+            inputFile.push_back(this -> line);
+            cout << inputFile.back() << endl;
             this -> lineCounter++;
         }
     }
@@ -60,9 +63,18 @@ void Parser::clearSpacesAndComments(string line, int lineCounter) {
     }
 }
 
+void Parser::arg1(string line) {
+    if(this -> command == "C_ARITHMETIC") {
+        this -> command = line;
+    } else if(this -> command == "C_PUSH") {
+        this -> command = "push";
+    }
+
+    this -> line = line;
+}
+
 int main() {
     Parser* parser= new Parser();
-
     cout << "Done!" << endl;
     return 0;
 }
