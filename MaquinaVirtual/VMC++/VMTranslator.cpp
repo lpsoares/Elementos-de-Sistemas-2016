@@ -50,9 +50,8 @@ Parser::Parser() {
 void Parser::clearSpacesAndComments() {
     // Clears the line of any possible space or comment on it (if existent)
     int i = 0;
-    bool begin = true;
     while(i <= this -> line.size()) {
-        if(isspace(this -> line[i]) || begin) {
+        if(isspace(this -> line[i])) {
             this -> line.erase(i, 1);
         } else if((this -> line[i] == '/') && (this -> line[i+1] == '/')) {
             this -> line.erase(i);
@@ -71,10 +70,12 @@ void Parser::arg2() {
 
 }
 
-string commandType() {
+string Parser::commandType() {
     // Evaluates the line string (already cleaned) to check for which kind of
     // of operator we have
-    line = this -> line;
+    string line = this -> line;
+    cout << "hai" << endl;
+
     if(line == "add" || line == "sub" || line == "neg" || line == "eq" || line == "gt" || line == "lt" || line == "and" || line == "or" || line == "not") {
         return "C_ARITHMETIC";
     } else if(line.find("pop") != string::npos) {
@@ -86,7 +87,7 @@ string commandType() {
     } else if(line.find("funcion") != string::npos) {
         return "C_FUNCTION";
     } else if(line.find("if-goto") != string::npos) {
-        return "C_IF;"
+        return "C_IF";
     } else if(line.find("goto") != string::npos) {
         return "C_GOTO";
     } else if(line.find("call") != string::npos) {
