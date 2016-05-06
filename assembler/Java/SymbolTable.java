@@ -32,8 +32,10 @@ public class SymbolTable {
 		symbolTable.put("KBD",24576);
 	}
 	
-	public void addEntry(String symbol, int address) {
-		symbolTable.put(symbol, address);
+	public void addEntry(String symbol) {
+		int variableSlot = 16;
+		symbolTable.put(symbol, variableSlot);
+		variableSlot++;
 	}
 	
 	public boolean contains(String symbol) {

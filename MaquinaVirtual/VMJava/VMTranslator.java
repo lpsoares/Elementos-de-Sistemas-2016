@@ -1,9 +1,9 @@
 // Curso Elementos de Sistemas
 
-public class Assembler {
+public class VMTranslator {
 
     public static void main(String[] args) {
-        System.out.println("Assembler");
+        System.out.println("VMTranslator");
     }
 
 }
