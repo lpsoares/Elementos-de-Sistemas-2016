@@ -16,6 +16,7 @@ class Parser {
         // parsed
         Parser();
         string commandType();
+        void advance();
 
     private:
         int lineCounter;
@@ -23,6 +24,7 @@ class Parser {
         void clearSpacesAndComments();
         void arg1();
         void arg2();
+        ifstream infile;
 
 };
 

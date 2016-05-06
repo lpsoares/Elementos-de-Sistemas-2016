@@ -3,10 +3,13 @@
 #include <fstream>
 #include <unordered_map>
 #include <string.h>
+#include "Parser.hpp"
+#include "CodeWriter.hpp"
 
 
 using namespace std;
 
+Parser* parser;
 
 int main() {
     // Setting these default values
@@ -15,7 +18,8 @@ int main() {
     int ARG = 0;
     int THIS = 0;
 
-    Parser* parser= new Parser();
+    parser = new Parser();
+
     cout << "Done!" << endl;
     return 0;
 }
