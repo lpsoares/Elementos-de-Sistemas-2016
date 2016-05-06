@@ -26,6 +26,7 @@ int main() {
     while(parser->hasMoreCommands()) {
         parser->advance(line);
         command_type = parser->commandType(line);
+        cout << command_type << endl;
     }
     cout << "Done!" << endl;
     return 0;
