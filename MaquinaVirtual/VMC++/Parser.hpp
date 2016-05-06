@@ -8,7 +8,6 @@ using namespace std;
 
 #ifndef PARSER_HPP
 #define PARSER_HPP
-#include "CodeWriter.hpp"
 
 class Parser {
     public:

@@ -3,11 +3,9 @@
 #include <fstream>
 #include <unordered_map>
 #include <string.h>
-#include "CodeWriter.hpp"
 #include "Parser.hpp"
 
 using namespace std;
-
 
 
 Parser::Parser() {
@@ -23,21 +21,13 @@ Parser::Parser() {
         this -> lineCounter = 0;
         cout << "Enter .vm file name here (with it's extension):" << endl;
         getline(cin, fileName);
-        ifstream inFile(fileName);
+        this -> infile.open(fileName);
+        do {
+            getline(this -> infile, this -> line);
+            clearSpacesAndComments();
+        } while(this -> line.empty());
+        cout << this -> line << endl;
 
-        // while(getline(inFile, this -> line)) {
-        //     // First, we gotta clear the line from any space or comment
-        //     this -> clearSpacesAndComments();
-        //     // Then, if there is still something left in it, we shall append
-        //     // it to the end of our list
-        //     if(!line.empty()) {
-        //         cout << this -> line << endl;
-        //         inputFile.push_back(this -> line);
-        //         this -> commandType();
-        //         // TODO: Do something with the information we just gathered
-        //         this -> lineCounter++;
-        //     }
-        // }
     } else {
         cout << "Enter the directory name here:" << endl;
         getline(cin, dirName);

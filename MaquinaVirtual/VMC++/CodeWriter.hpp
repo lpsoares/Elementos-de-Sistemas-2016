@@ -8,7 +8,6 @@ using namespace std;
 
 #ifndef CODEWRITER_HPP
 #define CODEWRITER_HPP
-#include "Parser.hpp"
 
 class CodeWriter {
     public:
@@ -25,7 +24,6 @@ class CodeWriter {
 
     private:
         ofstream writer;
-        Parser* parser;
 
 };
 
