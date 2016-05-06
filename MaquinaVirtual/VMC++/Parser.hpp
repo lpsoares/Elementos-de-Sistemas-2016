@@ -18,13 +18,13 @@ class Parser {
         string commandType(string &line);
         void advance(string &line);
         bool hasMoreCommands();
+        string arg1();
+        void arg2();
 
     private:
         int lineCounter;
         string line;
         void clearSpacesAndComments();
-        void arg1();
-        void arg2();
         ifstream infile;
 
 };

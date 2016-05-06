@@ -69,7 +69,14 @@ void Parser::clearSpacesAndComments() {
     }
 }
 
-void Parser::arg1() {
+string Parser::arg1() {
+    if(this->commandType() == "C_ARITHMETIC") {
+        return this->line;
+    } else if(this->commandType() == "C_POP") {
+    } else if(this->commandType() == "C_PUSH") {
+    } else if(this->commandType() == "") {
+
+    }
 
 }
 
@@ -82,13 +89,12 @@ string Parser::commandType(string &line) {
     // of operator we have. Also, deletes the substring that has the command
     // eg: "add", "sub", "pop" etc
     this->line = line;
+
     if(this->line.find("add", 0) != string::npos || this->line.find("sub", 0) != string::npos || this->line.find("neg", 0) != string::npos || this->line.find("and", 0) != string::npos || this->line.find("not", 0) != string::npos) {
-        this->line.erase(0, 3);
         line = this->line;
         return "C_ARITHMETIC";
 
     } else if(this->line.find("eq", 0) != string::npos || this->line.find("gt", 0) != string::npos || this->line.find("lt", 0) != string::npos || this->line.find("or", 0) != string::npos) {
-        this->line.erase(0, 2);
         line = this->line;
         return "C_ARITHMETIC";
 

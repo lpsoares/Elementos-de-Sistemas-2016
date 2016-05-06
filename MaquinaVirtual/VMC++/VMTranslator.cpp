@@ -17,6 +17,7 @@ int main() {
     int LCL = 0;
     int ARG = 0;
     int THIS = 0;
+    string final_command
     string command_type;
     string line;
 
@@ -27,6 +28,11 @@ int main() {
         parser->advance(line);
         command_type = parser->commandType(line);
         cout << command_type << endl;
+
+        if(command_type != "C_RETURN") {
+            final_command = parser->arg1();
+            cout << final_command << endl;
+        }
     }
     cout << "Done!" << endl;
     return 0;
