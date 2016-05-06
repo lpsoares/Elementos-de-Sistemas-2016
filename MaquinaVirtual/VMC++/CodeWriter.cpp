@@ -3,29 +3,15 @@
 #include <fstream>
 #include <unordered_map>
 #include <string.h>
+#include "CodeWriter.hpp"
+#include "Parser.hpp"
 
 using namespace std;
 
-class CodeWriter {
-    public:
-        CodeWriter();  // Constructor
-        void writeArithmetic(string);
-        void writePushPop(string, string, int); // (Comando, segmento, índice)
-        void writeLabel(string);    // (símbolo)
-        void writeGoto(string);     // (símbolo)
-        void writeIf(string);       // (símbolo)
-        void writeCall(string);     // (símbolo)
-        void writeReturn(string);   // (símbolo)
-        void writeFunction(string); // (símbolo)
-        void close(); // Closes output file
-
-};
 
 CodeWriter::CodeWriter() {
+    // First, we need to create our Parser object
+    this -> parser = new Parser;
     // This should recieve the output from the parsing
     ofstream writer("output.asm");
-}
-
-int main() {
-    return 0;
 }
