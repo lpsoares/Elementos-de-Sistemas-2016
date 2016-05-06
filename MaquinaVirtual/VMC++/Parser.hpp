@@ -14,8 +14,10 @@ class Parser {
         // Constructor, opens the file and gets it ready to be
         // parsed
         Parser();
-        string commandType();
-        void advance();
+        ~Parser();    // Also, the destructor
+        string commandType(string &line);
+        void advance(string &line);
+        bool hasMoreCommands();
 
     private:
         int lineCounter;

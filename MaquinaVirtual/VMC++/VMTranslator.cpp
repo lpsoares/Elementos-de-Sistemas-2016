@@ -17,10 +17,16 @@ int main() {
     int LCL = 0;
     int ARG = 0;
     int THIS = 0;
+    string command_type;
+    string line;
 
     parser = new Parser();
-
-
+    // We got to read the file line by line and work with it
+    // inside of this loop
+    while(parser->hasMoreCommands()) {
+        parser->advance(line);
+        command_type = parser->commandType(line);
+    }
     cout << "Done!" << endl;
     return 0;
 }
