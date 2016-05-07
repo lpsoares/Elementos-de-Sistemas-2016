@@ -1,7 +1,37 @@
-// Luciano Soares
-// File name: Pow.asm
+@0
+D=M
+@16
+M=D-1
+@1
+D=M
+@4
+M=D
+@0
+D=M
+@2
+M=D
+@1
+D=M
+@17
+M=D-1
+(LOOP)
+    @0
+    @0
+    D=M
+    @2
+    M=M+D
+    @16
+    M=M-1
+    @LOOP
+    M;JGT
+    
+    @0
+    D=M
+    @16
+    M=D
 
-// Faz o número em R0 elevado ao R1 e armazena o valor em R2.
-// (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.)
+    @17
+    M=M-1
+    @17
+    M;JGT
 
-// Put your code here.

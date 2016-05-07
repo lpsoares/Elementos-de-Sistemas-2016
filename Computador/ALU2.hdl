@@ -1,0 +1,65 @@
+// Luciano Soares
+// File name: ALU2.hdl
+
+/**
+ * The ALU2 (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs, 
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ *
+ * Adicionalmente faz um bit shift na saída
+ *
+*/
+
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+// if (bs == 0 and dr == 1) out = out << 1
+// if (bs == 0 and dr == 0) out = out >> 1
+
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+        //
+        bs; // bit shift off(1) on(0)
+        dr; // direction left(1) right(0)
+
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+        Zerador(a = x, sel = zx, out = zxout);
+        Zerador(a = y, sel = zy, out = zyout);
+        Negador(in = zxout, sel = nx, out = nxout);
+        Negador(in = zyout, sel = ny, out = nyout);
+        Add16(a = nxout, b = nyout, out = soma);
+        And16(a = nxout, b = nyout, out = outand);
+        Mux16(a = outand, b = soma, sel = f, out = outf);
+        Negador(in = outf, sel = no, out = outi);
+        Negador(in = outf, sel = no, out = outn);
+        Comparador(in = outi, zr = zr, ng = ng);
+        Mux16(a=outn, b=outd, sel=bs, out=out)
+        Not(in=dr, out=outnot)
+        Mux16(a[0]=dr,a[1]=outn[1],a[2]=outn[2],a[3]=outn[3],a[4]=outn[4],a[5]=outn[5],a[6]=outn[6],a[7]=outn[7],a[8]=outn[8],a[9]=outn[9],a[10]]=outn[10],a[11]=outn[11],a[12]=outn[12],a[13]=outn[13],a[14]=outn[14],a[15]=outn[15], b[0]=outn[0],b[1]=outn[1],b[2]=outn[2],b[3]=outn[3],b[4]=outn[4],b[5]=outn[5],b[6]=outn[6],b[7]=outn[7],b[8]=outn[8],b[9]=outn[9],b[10]=outn[10],b[11]=outn[11],b[12]=outn[12],b[13]=outn[13],b[14]=outn[14],b[15]=outnot, sel=dr, out=outd)
+        }

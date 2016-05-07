@@ -13,5 +13,8 @@ CHIP RAM1K {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    DMux(in=load,sel=address[9],a=DMUX0,b=DMUX1);
+    RAM512(in=in,load=DMUX0,address=address[0..8],out=RAM0);
+    RAM512(in=in,load=DMUX1,address=address[0..8],out=RAM1);
+    Mux16(a=RAM0,b=RAM1,sel=address[9],out=out);
 }
