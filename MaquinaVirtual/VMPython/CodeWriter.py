@@ -14,7 +14,7 @@ Seg = dict(zip(('local','argument','this','that','temp','pointer'),('LCL','ARG',
 
 class CodeWriter:
     
-    def __init__(self, arquivo_saida):  #constructor
+    def __init__(self, arquivo_saida):  #construtor
         self.endoflabel = 1
         self.arquivo = open(arquivo_saida + '.asm', 'w')
         
