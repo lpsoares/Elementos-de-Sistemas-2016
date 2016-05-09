@@ -40,10 +40,10 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
-    InstructionDecoder(in=instruction, zr=zrALU, ng=ngALU, muxAM=muxAMI, zx=zxALU, nx=nxALU, zy=zyALU, ny=nyALU, f=fALU, no=noALU, loadA=loadA, loadD=loadD, loadM=loadM, loadPC=loadPC , out=decodeOut);
-    Mux(a=instruction, b=outM, sel=loadM, out=formerMuxOut);
+    InstructionDecoder(in=instruction, zr=zrALU, ng=ngALU, muxAM=muxAMI, mux1=mux1, zx=zxALU, nx=nxALU, zy=zyALU, ny=nyALU, f=fALU, no=noALU, loadA=loadA, loadD=loadD, writeM=writeM, loadPC=loadPC);
+    Mux16(a=instruction, b=outM, sel=mux1, out=formerMuxOut);
     Register(in=formerMuxOut, load=loadA, out=addressM);
-    Mux(a=addressM, b=inM, sel=muxAMI , out=AM);
+    Mux16(a=addressM, b=inM, sel=muxAMI , out=AM);
     ALU2(x=AM, y=addressD, zx=zxALU, nx=nxALU, zy=zyALU, ny=nyALU, f=fALU, no=noALU, out=outM, zr=zrALU, ng=ngALU);
     Register(in=outM, load=loadD, out= addressD);
     PC(in=addressM,load=loadPC ,inc=true,reset=reset ,out=pc);
