@@ -24,6 +24,7 @@ class Parser {
     private:
         int lineCounter;
         string line;
+        string command_type;
         void clearSpacesAndComments();
         ifstream infile;
 

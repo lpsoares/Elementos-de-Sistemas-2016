@@ -13,16 +13,16 @@ Parser::Parser() {
     vector<string> inputFile;
     string fileName, dirName;
     string entry;
-    this -> line = "   ";
+    this->line = "   ";
 
     cout << "Are you entering a file or a directory name? [F/d]" << endl;
     getline(cin, entry);
 
     if(entry != "D" || entry != "d") {
-        this -> lineCounter = 0;
+        this->lineCounter = 0;
         cout << "Enter .vm file name here (with it's extension):" << endl;
         getline(cin, fileName);
-        this -> infile.open(fileName);
+        this->infile.open(fileName);
     } else {
         cout << "Enter the directory name here:" << endl;
         getline(cin, dirName);
@@ -60,7 +60,7 @@ void Parser::clearSpacesAndComments() {
         if(isspace(this->line[i])) {
             this->line.erase(i, 1);
         // Checks for comments
-    } else if((this->line[i] == '/') && (this->line[i+1] == '/')) {
+        } else if((this->line[i] == '/') && (this->line[i+1] == '/')) {
             this->line.erase(i);
             break;
         } else {
@@ -70,11 +70,12 @@ void Parser::clearSpacesAndComments() {
 }
 
 string Parser::arg1() {
-    if(this->commandType() == "C_ARITHMETIC") {
+    if(this->command_type == "C_ARITHMETIC") {
         return this->line;
-    } else if(this->commandType() == "C_POP") {
-    } else if(this->commandType() == "C_PUSH") {
-    } else if(this->commandType() == "") {
+    } else if(this->command_type == "C_POP") {
+
+    } else if(this->command_type == "C_PUSH") {
+    } else if(this->command_type == "C_LABEL") {
 
     }
 
@@ -92,54 +93,56 @@ string Parser::commandType(string &line) {
 
     if(this->line.find("add", 0) != string::npos || this->line.find("sub", 0) != string::npos || this->line.find("neg", 0) != string::npos || this->line.find("and", 0) != string::npos || this->line.find("not", 0) != string::npos) {
         line = this->line;
-        return "C_ARITHMETIC";
-
+        this->command_type = "C_ARITHMETIC";
     } else if(this->line.find("eq", 0) != string::npos || this->line.find("gt", 0) != string::npos || this->line.find("lt", 0) != string::npos || this->line.find("or", 0) != string::npos) {
         line = this->line;
-        return "C_ARITHMETIC";
-
+        this->command_type = "C_ARITHMETIC";
     } else if(this->line.find("pop", 0) != string::npos) {
         this->line.erase(0, 3);
         line = this->line;
-        return "C_POP";
-
+        this->command_type = "C_POP";
     } else if(this->line.find("push", 0) != string::npos) {
         this->line.erase(0, 4);
         line = this->line;
-        return "C_PUSH";
-
+        this->command_type = "C_PUSH";
     } else if(this->line.find("label", 0) != string::npos) {
         this->line.erase(0, 5);
         line = this->line;
-        return "C_LABEL";
+        this->command_type = "C_LABEL";
 
     } else if(this->line.find("funcion", 0) != string::npos) {
         this->line.erase(0, 7);
         line = this->line;
-        return "C_FUNCTION";
+        this->command_type = "C_FUNCTION";
 
     } else if(this->line.find("if-goto", 0) != string::npos) {
         this->line.erase(0, 7);
         line = this->line;
-        return "C_IF";
+        this->command_type = "C_IF";
 
     } else if(this->line.find("goto", 0) != string::npos) {
         this->line.erase(0, 4);
         line = this->line;
-        return "C_GOTO";
+        this->command_type = "C_GOTO";
 
     } else if(this->line.find("call", 0) != string::npos) {
         this->line.erase(0, 4);
         line = this->line;
-        return "C_CALL";
+        this->command_type = "C_CALL";
 
     } else if(line.find("return", 0) != string::npos) {
         this->line.erase(0, 6);
         line = this->line;
-        return "C_RETURN";
+        this->command_type = "C_RETURN";
     } else if(this->hasMoreCommands()) {
         // The only reason this is not a simple "else" is due
         // to how it would behave on the file's last line
+        this->command_type = "C_ERROR";
+    }
+
+    if(this->command_type != "C_ERROR") {
+        return this->command_type;
+    } else {
         cout << "ERROR: Command type not found" << endl;
     }
 }
