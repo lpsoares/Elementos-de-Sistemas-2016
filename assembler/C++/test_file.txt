@@ -1,0 +1,29 @@
+
+//
+
+//
+
+@1
+@R0
+@COOL
+@SCREEN
+        @KBD
+@i
+// test clearSpacesAndComments
+@234
+@i
+D = A
+@3      // dog
+M = D
+@SCREEN
+M = D
+0;JMP
+(COOL)
+@COOL
+(CRAZY)
+@CRAZY
+@i
+@j
+@k
+AM=D+1
+MD=D|M
