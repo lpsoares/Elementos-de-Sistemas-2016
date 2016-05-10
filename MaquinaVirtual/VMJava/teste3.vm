@@ -1,0 +1,3 @@
+function func 1
+label loop
+return
