@@ -20,7 +20,7 @@ class VMTranslator(object):
             code_writer = CodeWriter.CodeWriter(outfile)
             code_writer.write_init()
             for infile in infiles:
-                self._translate(infile, code_writer)
+                self.traducao(infile, code_writer)
             code_writer.close_file()
         
     def traducao(self, infile, code_writer):
@@ -28,9 +28,9 @@ class VMTranslator(object):
         code_writer.set_file_name(os.path.basename(infile))
         while parser.has_more_commands():
             parser.advance()
-            self._gen_code(parser, code_writer)
+            self.passa_parser_cdw(parser, code_writer)
             
-    def passa_de_parser_para_cdw(self, parser, code_writer):
+    def passa_parser_cdw(self, parser, code_writer):
         cmd = parser.command_type()
         if cmd == C_ARITHMETIC:
             code_writer.write_arithmetic(parser.arg1())
@@ -55,7 +55,7 @@ def main():
     else:
         infiles, outfile = get_files( sys.argv[1] )
         trans = VMTranslator()
-        trans.translate_all(infiles, outfile)
+        trans.traduz_tudo(infiles, outfile)
 
 def get_files( file_or_dir ):
     if file_or_dir.endswith('.vm'):
