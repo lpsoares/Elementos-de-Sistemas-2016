@@ -1,0 +1,51 @@
+// Luciano Soares.
+// File name: InstructionDecoder.hdl
+/**
+* Chip da memória de Instruções.
+*/
+CHIP InstructionDecoder {
+IN in[16], zr, ng; // ler a instruções e demais retornos da CPU
+OUT muxAM, mux1, zx, nx, zy, ny, f, no, bs, dr, loadA, loadD, loadM, loadPC; // controlar todos os modulos da CPU
+
+PARTS:
+//Primeiro bit indica que é um Comando
+//Pode-se ignorar segundo bit e terceiro bit
+//Bit 0 - Controla se é comando tipo C ou tipo A
+Fio(in=in[15],out=mux1);
+
+//Bit 'a'
+//Controla Mux se A ou M
+Fio(in=in[12],out=muxAM);
+
+//BShift
+Fio(in=in[14],out=bs);
+
+Fio(in=in[13],out=dr);
+
+//Bits 'C1','C2','C3','C4','C5','C6'
+//Controlam zx, nx, zy, ny, f, no, respectivamente
+Fio(in=in[11], out=zx);
+Fio(in=in[10], out=nx);
+Fio(in=in[9], out=zy);
+Fio(in=in[8], out=ny);
+Fio(in=in[7], out=f);
+Fio(in=in[6], out=no);
+
+//Bits 'D1','D2','D3'
+//Controlam load do A, load do D, load do M, respectivamente, definindo o "destino" se será salvo ou não
+Fio(in=in[5], out=loadA);
+Fio(in=in[4], out=loadD);
+Fio(in=in[3], out=loadM);
+
+//Bits 'J1' = in[2], 'J2' = in[1], 'J3' = in[0]
+//São as condições de <, =, >, respectivamente
+//Controlam o JMP. Portanto, o load de PC assim mudando a posição do counter
+And(a=in[2],b=zr,out=parca);
+And(a=in[1],b=ng,out=parcb);
+Or(a=parca,b=parcb,out=parcc);
+Not(in=ng,out=parcng);
+Not(in=zr,out=parczr);
+And(a=parcng,b=parczr,out=parcd);
+And(a=in[0],b=parcd,out=parce);
+Or(a=parcc,b=parce,out=loadPC);
+}
