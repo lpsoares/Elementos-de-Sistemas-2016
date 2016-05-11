@@ -3,6 +3,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <string.h>
+#include <sstream>
 
 using namespace std;
 
@@ -27,6 +28,8 @@ class Parser {
         string command_type;
         void clearSpacesAndComments();
         ifstream infile;
+        vector<string> line_split;
+        stringstream ss;
 
 };
 

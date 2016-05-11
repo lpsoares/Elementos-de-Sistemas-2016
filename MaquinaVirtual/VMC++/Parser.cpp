@@ -3,6 +3,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <string.h>
+#include <sstream>
 #include "Parser.hpp"
 
 using namespace std;
@@ -54,26 +55,28 @@ bool Parser::hasMoreCommands() {
 
 void Parser::clearSpacesAndComments() {
     // Clears the line of any possible space or comment on it (if existent)
-    int i = 0;
-    while(i <= this->line.size()) {
-        // Checks for empty spaces
-        if(isspace(this->line[i])) {
-            this->line.erase(i, 1);
-        // Checks for comments
-        } else if((this->line[i] == '/') && (this->line[i+1] == '/')) {
-            this->line.erase(i);
-            break;
-        } else {
-            i++;
-        }
+    string buf;
+    stringstream ss(line);
+    this->line_split.clear();
+
+    // Equivalent to python's split
+    while(ss >> buf) {
+        this->line_split.push_back(buf);
     }
+
+    for(string s : this->line_split) {
+        cout << s << endl;
+    }
+    // for(int i=0; i<= line_split.size(); i++) {
+    //     if(this->line_split[i].find("//"))
+    // }
+
 }
 
 string Parser::arg1() {
     if(this->command_type == "C_ARITHMETIC") {
         return this->line;
     } else if(this->command_type == "C_POP") {
-        a
     } else if(this->command_type == "C_PUSH") {
     } else if(this->command_type == "C_LABEL") {
 
