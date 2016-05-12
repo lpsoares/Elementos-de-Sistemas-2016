@@ -77,8 +77,20 @@ string Parser::arg1() {
     if(this->command_type == "C_ARITHMETIC") {
         return this->line;
     } else if(this->command_type == "C_POP") {
+
     } else if(this->command_type == "C_PUSH") {
+
     } else if(this->command_type == "C_LABEL") {
+
+    } else if(this->command_type == "C_FUNCTION") {
+
+    } else if(this->command_type == "C_IF") {
+
+    } else if(this->command_type == "C_GOTO") {
+
+    } else if(this->command_type == "C_CALL") {
+
+    } else if(this->command_type == "C_RETURN") {
 
     }
 
