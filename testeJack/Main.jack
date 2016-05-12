@@ -1,0 +1,24 @@
+/**
+ * Main class para desenhar figuras geometricas na tela.
+ */
+class Main {
+
+    function void main() {
+    
+        do Main.drawQuadrado(50, 50, 30);
+        do Triangle.draw(100,50,30);
+        return;
+    }
+    
+    /** Desenha um quadrado na tela. */
+    function void drawQuadrado(int x, int y, int d) {
+        var int e;
+        let e = Math.divide(d,2);
+        do Screen.drawLine(x-e, y-e, x+e, y-e);
+        do Screen.drawLine(x+e, y-e, x+e, y+e);
+        do Screen.drawLine(x+e, y+e, x-e, y+e);
+        do Screen.drawLine(x-e, y-e, x-e, y+e);
+        return;
+    }
+
+}
