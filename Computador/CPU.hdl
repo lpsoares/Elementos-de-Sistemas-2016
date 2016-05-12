@@ -38,26 +38,15 @@
          addressM[15],    // Address in data memory (of M)
          pc[15];          // address of next instruction
 
-     PARTS:
-     // Primeiro Mux, recebe a instrução.
-     Mux16(a = instruction, b = outM, sel = mux1, out = outMUX16)
 
-     //Registrador A
-     Register(in = outMUX16 ,load = loadA, out[0..14] = addressM)
+    PARTS:
+    // Put your code here:
+    InstructionDecoder(in=instruction, zr=zrALU, ng=ngALU, muxAM=muxAMI, mux1=mux1, zx=zxALU, nx=nxALU, zy=zyALU, ny=nyALU, f=fALU, no=noALU, loadA=loadA, loadD=loadD, writeM=writeM, loadPC=loadPC);
+    Mux16(a=instruction, b=outM, sel=mux1, out=formerMuxOut);
+    Register(in=formerMuxOut, load=loadA, out=addressM);
+    Mux16(a=addressM, b=inM, sel=muxAMI , out=AM);
+    ALU2(x=AM, y=addressD, zx=zxALU, nx=nxALU, zy=zyALU, ny=nyALU, f=fALU, no=noALU, out=outM, zr=zrALU, ng=ngALU);
+    Register(in=outM, load=laodD, out= addressD);
+    PC(in=addressM,load=loadPC ,inc=true,reset=reset ,out=pc);
 
-     //Segundo Mux, chamado de Mux 'MuxAM', por receber a saida do Registrador A e o valor de M
-     Mux(a = inM, b = addressM, sel = loadM, out = OutMuxAM)
-
-     //Program Counter(PC)
-  	PC(in=outRegisterA ,load=loadPC ,inc = true ,reset=reset ,out[0..14] = outPC);
-
-     //Registrador D
-     Register(in = outM ,load = loadD, out = outRegisterD)
-
-     //ALU2
-     ALU2(x = outRegisterD,y = OutMuxAM ,zx = zx ,nx = nx ,zy = zy ,ny = ny ,f = f ,no = no ,bs = bs , dr = dr ,out = outM ,zr = zr ,ng = ng);
-
-     //Valor para M
-     And(a= instruction, b= instruction[3], out = writeM);
-
- }
+}
