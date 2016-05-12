@@ -1,0 +1,22 @@
+class Trapezio {
+
+    function void draw(int x, int y, int d, int D, int l) {
+        var int h;
+        var int j;
+
+        let h = d + D;
+        let h = Math.divide(h,2);
+
+        let j = d - D;
+        let j = Math.divide(j,2);
+
+        do Screen.drawLine(x, y, x+j, y-l);
+        do Screen.drawLine(x+j, y-l, x+h, y-l);
+        do Screen.drawLine(x+h, y-l, x+d, y);
+        do Screen.drawLine(x+d, y, x, y);
+
+        return;
+
+    }
+
+}
