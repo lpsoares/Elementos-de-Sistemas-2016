@@ -6,7 +6,7 @@ class Main {
     function void main() {
     
         do Main.drawQuadrado(50, 50, 30);
-        
+        do Triangle.draw(100,50,30);
         return;
     }
     
