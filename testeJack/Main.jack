@@ -7,6 +7,7 @@ class Main {
     
         do Main.drawQuadrado(50, 50, 30);
         do Triangle.draw(100,50,30);
+        do Trapezio.draw(150,50,30,10,20);
         return;
     }
     
