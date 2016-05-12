@@ -8,6 +8,14 @@ class Main {
         do Main.drawQuadrado(50, 50, 30);
         do Triangle.draw(100,50,30);
         do Trapezio.draw(150,50,30,10,20);
+        /**
+        do Diamond.draw(200,50,30);
+        do Parallelogram.draw(250,50,30,30);
+        do Star.draw(300,50,30);
+        do Octagon.draw(50,100,30);
+        do Pentagon.draw(100,100,30);
+        do Hexagon.draw(150,100,30);
+        */ 
         return;
     }
     
