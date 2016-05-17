@@ -13,7 +13,11 @@ def get_scrum_master():
 
 	#Get student at random index in firebase
 	idx = random.randint(1,16)
-	aluno = firebase.get("/alunos","/alunos0{0}".format(idx)) 
+	
+	if idx < 10:
+		aluno = firebase.get("/alunos","/alunos00{0}".format(idx))
+	else:
+		aluno = firebase.get("/alunos","/alunos0{0}".format(idx))
 
 	#If student wasn't Scrum Master before, return student and update his/her status
 	if aluno["wasSM"] == "False":
