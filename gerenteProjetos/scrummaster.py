@@ -10,7 +10,11 @@ firebase = firebase.FirebaseApplication("https://elemsist.firebaseio.com/")
 
 #Get scrum master
 def get_scrum_master():
-
+	
+	#Get studnet count from firebase
+	n_alunos = firebase.get("/alunos","n_alunos")
+	print(n_alunos)
+	
 	#Get student at random index in firebase
 	idx = random.randint(1,8)
 	aluno = firebase.get("/alunos","/alunos{0}".format(idx))
