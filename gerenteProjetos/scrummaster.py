@@ -18,7 +18,7 @@ def get_scrum_master():
 	#If student wasn't Scrum Master before, return student and update his/her status
 	if aluno["wasSM"] == "False":
 		scrum_master = aluno["name"]
-		firebase.put("/alunos/alunos0{0}".format(idx), name="wasSM", data="True")
+		firebase.put("/alunos/alunos{0}".format(idx), name="wasSM", data="True")
 		return scrum_master
 
 	#Else, try again
