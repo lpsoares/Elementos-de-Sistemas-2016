@@ -9,6 +9,7 @@ class Paralelogramo {
         do Screen.drawLine(x + d, y + e, x - e - 5, y + e); 
         do Screen.drawLine(x, y - e, x - e - 5, y + e); 
         return;
+        
     }
 
 
