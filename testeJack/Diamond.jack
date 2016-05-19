@@ -1,0 +1,18 @@
+class Diamond {
+
+	function void draw(int x, int y, int d){
+
+		var int tamanho;
+		let tamanho = d / (2 * Math.sqrt(2));
+		// Line - left/top
+		do Screen.drawLine(x - tamanho, y, x, y - tamanho);
+		// Line - top/right
+		do Screen.drawLine(x , y - tamanho, x + tamanho, y);
+		// Line - right/bottom
+		do Screen.drawLine(x + tamanho, y, x, y + tamanho);
+		// Line - bottom/left
+		do Screen.drawLine(x, y + tamanho, x - tamanho, y);
+
+		return;
+	}
+}
