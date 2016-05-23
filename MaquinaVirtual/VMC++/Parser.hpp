@@ -29,7 +29,6 @@ class Parser {
         void clearSpacesAndComments();
         ifstream infile;
         vector<string> line_split;
-        stringstream ss;
 
 };
 
