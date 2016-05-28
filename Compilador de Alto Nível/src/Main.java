@@ -1,5 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.StringTokenizer;
+
 
 public class Main {
 
@@ -13,7 +13,13 @@ public class Main {
 		}
 		while(jk.hasMoreTokens()){
 			jk.advance();
-			System.out.println(jk.getCurrentToken());
+			System.out.print(jk.getCurrentToken()+ " ");
+			System.out.print(jk.tokenType() + " ");
+			System.out.print(jk.keyWord()+ " ");
+			System.out.print(jk.symbol()+ " ");
+			System.out.print(jk.identifier()+ " ");
+			System.out.print(jk.intVal()+ " ");
+			System.out.println(jk.stringVal());
 		}
 	}
 }

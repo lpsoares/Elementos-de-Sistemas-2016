@@ -5,7 +5,7 @@ public interface AllJackTokenizer {
 	String tokenType();
 	String keyWord();
 	char symbol();
-	String indetifier();
+	String identifier();
 	int intVal();
 	String stringVal();
 }

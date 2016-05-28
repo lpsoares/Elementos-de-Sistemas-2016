@@ -11,16 +11,16 @@ public class JackTokenizer implements AllJackTokenizer{
     private int currentLineIndex;
 	private String currentToken;
 	private static Scanner s;
-	private final String delim = "(){}><=+-[]";
+	private final String delim = "(){}><=+-[];";
     private String currentTokenType;
 	private String currentKeyWord;
 	private StringTokenizer st;
 	private String[] keyword = new String[]{"class","constructor","function","method","field",
 			"static","var","int","char","boolean","void","true","false","null","this","let","do",
 			"if","else","while","return"};
-	private String[] symbol = new String[]{"}","}","(",")","[","]",".",",",";","+","-","*","/","&",
+	private String[] symbol = new String[]{"}","{","(",")","[","]",".",",",";","+","-","*","/","&",
 			"|","<",">","=","~"};
-		
+    ArrayList<Character> newToken = new ArrayList<>();
 	public String getCurrentToken(){
 		return currentToken;
 	}
@@ -49,6 +49,8 @@ public class JackTokenizer implements AllJackTokenizer{
 	public void advance() {
 		if(st.hasMoreTokens()){
 			currentToken = 	st.nextToken();
+			currentToken =  currentToken.replaceAll("\\s+","");//tira espacos
+			currentToken =  currentToken.replaceAll("\t","");//tira tabs
 		}
 		else{
 			if(currentLineIndex+1 < vm.size()){
@@ -64,9 +66,7 @@ public class JackTokenizer implements AllJackTokenizer{
 
 	@Override
 	public String tokenType() { 
-		
-		currentToken =  currentToken.replaceAll("\\s","");
-		
+
 		if(Arrays.asList(keyword).contains(currentToken)){
 			currentTokenType = "KEYWORD";
 		}
@@ -75,25 +75,26 @@ public class JackTokenizer implements AllJackTokenizer{
 			currentTokenType = "SYMBOL";
 		}
 		
-		else if(Integer.parseInt(currentToken) >= 0){
+		else if(currentToken.matches("[0-9]+")){
 			currentTokenType = "INT_CONST";
 		}
 		
-		else if(currentToken.matches("[a-zA-Z]+")){
-			currentTokenType = "STRING_CONST";
-		}
-		
 		else {
-			currentTokenType = "IDENTIFIER";
+			char[] substring = currentToken.toCharArray(); 
+			if(substring[0]=='"'){
+				currentTokenType = "STRING_CONST";
+			}
+			else {
+				currentTokenType = "IDENTIFIER";
+			}
 		}
-		
+			
 		return currentTokenType;
 	}
 
 	@Override
 	public String keyWord() {
-		currentToken =  currentToken.replaceAll("\\s","");
-
+		
 		if (currentTokenType == "KEYWORD"){
 	         if (currentToken.equals("class")) { 
 	        	 currentKeyWord = "CLASS";
@@ -161,15 +162,14 @@ public class JackTokenizer implements AllJackTokenizer{
 		}
 		
 		else{
-			currentKeyWord = "ERROR";
+			currentKeyWord = null;
 		}
 		return currentKeyWord;       
 	}
 
 	@Override
 	public char symbol() {
-		currentToken =  currentToken.replaceAll("\\s","");
-
+		
 		if (currentTokenType == "SYMBOL"){
 			return currentToken.charAt(0);
 		}
@@ -179,7 +179,7 @@ public class JackTokenizer implements AllJackTokenizer{
 	}
 
 	@Override
-	public String indetifier() {
+	public String identifier() {
 		if (currentTokenType == "IDENTIFIER"){
 			return currentToken;
 		}
@@ -190,8 +190,6 @@ public class JackTokenizer implements AllJackTokenizer{
 
 	@Override
 	public int intVal() {
-		currentToken =  currentToken.replaceAll("\\s","");
-
 		if (currentTokenType == "INT_CONST"){
 			return Integer.parseInt(currentToken);
 		}
@@ -202,10 +200,16 @@ public class JackTokenizer implements AllJackTokenizer{
 
 	@Override
 	public String stringVal() {
-		currentToken =  currentToken.replaceAll("\\s","");
-
+		currentToken =  currentToken.replaceAll("\t","");//tira tabs de novo!
 		if (currentTokenType == "STRING_CONST"){
-			return currentToken;
+		char[] substring = currentToken.toCharArray(); 
+			for (char i : substring) {
+				if(i != '"'){
+					newToken.add(i);
+				}
+			}			
+		String currentToken = newToken.stream().map(e->e.toString()).reduce((acc, e) -> acc  + e).get();
+		return currentToken;
 		}
 		else{
 			return null;
