@@ -86,9 +86,9 @@ void Parser::clearSpacesAndComments() {
 
 string Parser::arg1() {
     if(this->command_type == "C_ARITHMETIC") {
-        return this->line;
+        return this->line_split[0];
     } else if(this->command_type == "C_POP") {
-
+        return this->
     } else if(this->command_type == "C_PUSH") {
 
     } else if(this->command_type == "C_LABEL") {

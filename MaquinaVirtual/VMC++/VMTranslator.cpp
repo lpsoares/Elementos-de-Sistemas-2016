@@ -9,8 +9,6 @@
 
 using namespace std;
 
-Parser* parser;
-
 int main() {
     // Setting these default values
     int SP = 256;
@@ -21,7 +19,7 @@ int main() {
     string command_type;
     string line;
 
-    parser = new Parser();
+    unique_ptr<Parser> parser(new Parser);
     // We got to read the file line by line and work with it
     // inside of this loop
     while(parser->hasMoreCommands()) {
@@ -35,5 +33,6 @@ int main() {
         // }
     }
     cout << "Done!" << endl;
+
     return 0;
 }
