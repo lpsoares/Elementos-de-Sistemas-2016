@@ -1,13 +1,12 @@
 import java.util.*;
 
-
 public class SymbolTable {
-	HashMap<String, String[]> classScope;
-	HashMap<String, String[]> methodScope;
-	int staticIndex;
-	int fieldIndex;
-	int varIndex;
-	int argIndex;
+	private HashMap<String, String[]> classScope;
+	private HashMap<String, String[]> methodScope;
+	private int staticIndex;
+	private int fieldIndex;
+	private int varIndex;
+	private int argIndex;
 
 	public SymbolTable() {
 		// Creates a new empty symbol table
@@ -17,14 +16,12 @@ public class SymbolTable {
 		this.fieldIndex = 0;
 		this.varIndex = 0;
 		this.argIndex = 0;
-
 	}
 
 	public void startSubroutine() {
 		// Starts a new subroutine scope
 		// (i.e., resets the subroutine's symbol table)
 		this.methodScope.clear();
-
 	}
 
 	public void define(String name, String type, String kind) {
@@ -51,16 +48,26 @@ public class SymbolTable {
 			String[] value = {type, kind, String.valueOf(this.varIndex)};
 			this.methodScope.put(name, value);
 			this.varIndex++;
-
 		}
-
 	}
 
 	public int varCount(String kind) {
 		// Returns the number of variables of a given kind
 		// already defined in the current scope
+		if(kind == "STATIC") {
+			return (staticIndex + 1);
+			
+		} else if(kind == "FIELD") {
+			return (fieldIndex + 1);
+			
+		} else if(kind == "VAR") {
+			return (varIndex + 1);
+			
+		} else if(kind == "ARG") {
+			return (argIndex + 1);
+		}
 
-		return 0;
+		return -1;
 	}
 
 	public String kindOf(String name) {
@@ -72,6 +79,7 @@ public class SymbolTable {
 		} else if(classScope.get(name) != null) {
 			return (classScope.get(name)[1]);
 		}
+		
 		return "NONE";
 	}
 
@@ -83,6 +91,7 @@ public class SymbolTable {
 		} else if(classScope.get(name) != null) {
 			return (classScope.get(name)[0]);
 		}
+		
 		return null;
 	}
 
@@ -93,6 +102,7 @@ public class SymbolTable {
 		} else if(classScope.get(name) != null) {
 			return Integer.valueOf(classScope.get(name)[2]);
 		}
+		
 		return -1;
 	}
 }
