@@ -1,0 +1,13 @@
+class Octogono{
+	function void draw(int x, int y, int l) {
+	do Screen.drawLine(x,y,x+l,y);
+	do Screen.drawLine(x+l,y,x+l+x,y+x);
+	do Screen.drawLine(x+l+x,y+x,x+l+x,y+x+l);
+	do Screen.drawLine(x+l+x,y+x+l,x+l,y+x+l+x);
+	do Screen.drawLine(x+l,y+x+l+x,x,y+x+l+x);
+	do Screen.drawLine(x,y+x+l+x,0,y+x+l);
+	do Screen.drawLine(0,y+x+l,0,y+x);
+	do Screen.drawLine(0,y+x,x,y);	
+	return;
+	}
+}

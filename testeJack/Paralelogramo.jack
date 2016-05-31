@@ -1,0 +1,16 @@
+
+class Paralelogramo {
+
+    function void drawParalelogramo(int x, int y, int d) {
+        var int e;
+        let e = Math.divide(d,2);
+        do Screen.drawLine(x, y - e, x + d + 20, y - e); 
+        do Screen.drawLine(x + d + 20, y - e, x + d, y + e); 
+        do Screen.drawLine(x + d, y + e, x - e - 5, y + e); 
+        do Screen.drawLine(x, y - e, x - e - 5, y + e); 
+        return;
+        
+    }
+
+
+}

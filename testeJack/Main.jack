@@ -6,7 +6,16 @@ class Main {
     function void main() {
     
         do Main.drawQuadrado(50, 50, 30);
-        
+        do Triangle.draw(100,50,30);
+        do Trapezio.draw(150,50,30,10,20);
+        do Paralelogramo.drawParalelogramo(200,50,30,30);
+        do Diamond.draw(250,50,30);
+        do Octagono.draw(50,100,30);
+        do Pentagon.draw(100,100,30);
+        do Hexagono.drawHexagono(150,100,30);
+        /**
+        do Star.draw(300,50,30);        
+        */ 
         return;
     }
     

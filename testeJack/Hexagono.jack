@@ -1,0 +1,28 @@
+/**
+ * Hexagono class para desenhar figuras geometricas na tela.
+ */
+class Hexagono {
+
+    function void main() {
+    
+        do Hexagono.drawHexagono(50, 50, 30);
+        
+        return;
+    }
+    
+
+
+    /** Desenha um quadrado na tela */
+    function void drawHexagono(int x, int y, int d){
+        var int e;
+        let e = Math.divide(d,2);
+        do Screen.drawline(x-d, y-d, x+d, y-d);
+        do Screen.drawline(x+d, y-d, x+(2*d), y-d+(math.sqrt(3)*d));
+        do Screen.drawline(x+(2*d), y-d+(math.sqrt(3)*d), x+d, y-d+(2*(math.sqrt(3)*d)));
+        do Screen.drawline(x+d, y-d+(2*(math.sqrt(3)*d)),x-d, y-d+(2*(math.sqrt(3)*d)));
+        do Screen.drawline(x-d, y-d+(2*(math.sqrt(3)*d)), x-(2*d), y-d+(math.sqrt(3)*d));
+        do Screen.drawline(x-(2*d), y-d+(math.sqrt(3)*d), x-d, y-d);
+        return;
+    }
+
+}
