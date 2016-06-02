@@ -4,7 +4,7 @@ public interface AllJackTokenizer {
 	void advance();
 	String tokenType();
 	String keyWord();
-	char symbol();
+	String symbol();
 	String identifier();
 	int intVal();
 	String stringVal();
