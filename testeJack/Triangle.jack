@@ -1,0 +1,29 @@
+/**
+	Draw equilateral triangle on screen
+
+                  h = d . sqrt(3)
+                      -----------
+      /|\                  2
+   d / | \ d      Starter point: (x, y) inferior left vertex
+    /  |h \       1. First line: from (x, y) to (x + d/2, y - h)
+   /___|___\      2. Second line: from (x + d/2, y - h) to (x + d, y)
+    d/2 d/2       3. Third line: from (x + d, y) to (x, y)
+  |---------|
+       d
+*/     
+
+class Triangle {
+
+	function void draw(int x, int y, int d) {
+		/** Since our screen starts at top left, we subtract h from y
+		instead of adding... Otherwise the triangle would be upside down.*/
+		var int h;
+		var int d2;
+		let h = (d * Math.sqrt(3)) / 2;
+		let d2 = d / 2;
+		do Screen.drawLine(x, y, x + d2, y - h);
+		do Screen.drawLine(x + d2, y - h, x + d, y);
+		do Screen.drawLine(x + d, y, x, y);
+		return;
+	}
+}
