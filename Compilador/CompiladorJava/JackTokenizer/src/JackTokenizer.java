@@ -15,11 +15,13 @@ public class JackTokenizer implements AllJackTokenizer{
     private String currentTokenType;
 	private String currentKeyWord;
 	private StringTokenizer st;
+	private String temp;
+	private boolean isSymbol;
+	private boolean checkedNext;
 	private String[] keyword = new String[]{"class","constructor","function","method","field",
 			"static","var","int","char","boolean","void","true","false","null","this","let","do",
 			"if","else","while","return"};
-	private String[] symbol = new String[]{"}","{","(",")","[","]",".",",",";","+","-","*","/","&",
-			"|","<",">","=","~"};
+	private String[] symbol = new String[]{"}","{","(",")","[","]",".",",",";","+","-","*","/","&","|","<",">","=","~"};
     ArrayList<Character> newToken = new ArrayList<>();
 	public String getCurrentToken(){
 		return currentToken;
@@ -27,6 +29,8 @@ public class JackTokenizer implements AllJackTokenizer{
 
 	public JackTokenizer(String path) throws FileNotFoundException{
 		currentLineIndex = 0;
+		checkedNext = false;
+		isSymbol = false;
         s = new Scanner(new File(path));
         while(s.hasNextLine())
         	vm.add(s.nextLine());
@@ -48,9 +52,32 @@ public class JackTokenizer implements AllJackTokenizer{
 	@Override
 	public void advance() {
 		if(st.hasMoreTokens()){
-			currentToken = 	st.nextToken();
+			if (checkedNext){
+				currentToken = st.nextToken();
+			}
+			
+			else{
+				if (isSymbol){
+					currentToken = temp;
+					isSymbol = false;
+				}
+				
+				else{
+					currentToken = 	st.nextToken();
+				}
+			}
+			
+		if (currentToken == "\t" || currentToken == ""){
+			currentToken = st.nextToken();
+			}
+		
+		else{
 			currentToken =  currentToken.replaceAll("\\s+","");//tira espacos
 			currentToken =  currentToken.replaceAll("\t","");//tira tabs
+		}
+
+				
+
 		}
 		else{
 			if(currentLineIndex+1 < vm.size()){
@@ -81,12 +108,15 @@ public class JackTokenizer implements AllJackTokenizer{
 		
 		else {
 			char[] substring = currentToken.toCharArray(); 
-			if(substring[0]=='"'){
-				currentTokenType = "STRING_CONST";
+			if(substring.length>0){
+				if(substring[0]=='"'){
+					currentTokenType = "STRING_CONST";
+				}
+				else {
+					currentTokenType = "IDENTIFIER";
+				}
 			}
-			else {
-				currentTokenType = "IDENTIFIER";
-			}
+			
 		}
 			
 		return currentTokenType;
@@ -168,19 +198,31 @@ public class JackTokenizer implements AllJackTokenizer{
 	}
 
 	@Override
-	public char symbol() {
-		
+	public String symbol() {
+		currentToken =  currentToken.replaceAll("\t","");//tira tabs de novo!
 		if (currentTokenType == "SYMBOL"){
-			return currentToken.charAt(0);
+			if (currentToken.contains("<") | currentToken.contains(">") | currentToken.contains("=")) {
+				if (!checkedNext){
+					isSymbol = true;
+					checkedNext = false;
+				}
+				
+				temp = st.nextToken();
+				if (temp.contains("=")){
+					currentToken+=temp;
+					checkedNext = true;
+				}
+			}
+			return currentToken;
 		}
 		else{
-			return 0;
+			return null;
 		}
 	}
 
 	@Override
 	public String identifier() {
-		if (currentTokenType == "IDENTIFIER"){
+		if (currentTokenType == "IDENTIFIER"){			
 			return currentToken;
 		}
 		else{
