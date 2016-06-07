@@ -39,7 +39,19 @@ class Sys {
     /** Waits approximately duration milliseconds and then returns. */
     function void wait(int duration) {
         // Segundo o livro, devemos cronometras um loop que daria o tempo
-        // do wait pedido
+        // do wait pedido, no entanto, cada computador terá um tempo diferente
+        // para um dado loop, o correto seria fazer esse timing baseado no
+        // proprio Douglas (ou Hack), mas atualmente não sei como.
+
+        // Supondo que o loop abaixo durasse 1ms, essa seria a solucao, caso dure
+        // menos de 1ms, sera necessario colocar um loop dentro deste, ou multiplicar
+        // o valor de duration por este fator
+        var int c;
+        let c = 0;
+        while(c <= duration) {
+            c = c + 1;
+        }
+        return;
     }
 
     /** Prints the given error code in the form "ERR<errorCode>", and halts. */
