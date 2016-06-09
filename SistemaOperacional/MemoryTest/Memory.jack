@@ -5,28 +5,82 @@
 
 /**
  * Memory operations library.
- */ 
+ */
 class Memory {
+
+    static Array freeList;
+    static int length,
+    static int next;
 
     /** Initializes memory parameters. */
     function void init() {
+        var Array freeList;
+        var int heapBase,heapLength
+        let heapBase = 2048;
+        let heapLength = 16384 - 2048;
+        let length = 0;
+        let next = 1
+
+        let freeList = heapBase;
+        let freeList[length] = heapLength;
+        let freelist[next] = null;
+
     }
 
     /** Returns the value of the main memory at the given address. */
     function int peek(int address) {
+        var int memory;
+        let memory = 0;
+        return memory[address];
     }
 
     /** Sets the value of the main memory at this address
-     *  to the given value. */
+    *  to the given value. */
     function void poke(int address, int value) {
+        var int memory;
+        let memory = 0;
+        let memory[address] = value;
+        return;
     }
 
-    /** finds and allocates from the heap a memory block of the 
-     *  specified size and returns a reference to its base address. */
+    /** finds and allocates from the heap a memory block of the
+    *  specified size and returns a reference to its base address. */
     function int alloc(int size) {
+        var int pointer;
+        while (freeList[length] < size + 1) {
+            if (~(freeList[length + 1] = null)){
+                let length = freeList[length + 1];
+            }
+            else {
+                return -1;
+            }
+        }
+        if (freeList[length] = size + 1) {
+            let freeList[length + 1] = freeList[freeList[length+1] + 1];
+        }
+        else {
+            var int sizeBefore;
+            let sizeBefore = freeList[freeList[length + 1]];
+            let freeList[freeList[length + 1]] = size + 1;
+            var int pointerNextBlock;
+            let pointerNextBlock = freeList[freeList[length+1] + 1];
+            var int NextBlock;
+            let freeList[length + 1] = freeList[length + 1] + size;
+            let NextBlock = freeList[length + 1] + size + 2
+            let freeList[NextBlock] = val;
+            let freeList[NextBlock - 1] = sizeBefore - size - 1;
+        }
+
     }
 
     /** De-allocates the given object and frees its space. */
-    function void deAlloc(int object) {
-    }    
+    function void deAlloc(Array object) {
+        var int position;
+        let position = 0;
+        while(~(freeList[position + 1] = null) ){
+            let position = freeList[position + 1];
+        }
+        let freeList[position + 1] = object;
+        object[1] = null;
+    }
 }
