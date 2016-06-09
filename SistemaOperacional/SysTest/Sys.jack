@@ -10,17 +10,57 @@ class Sys {
 
     /** Performs all the initializations required by the OS. */
     function void init() {
+        // Devemos chamar todos os metodos init de todas as funcoes do OS,
+        // mas não sei qual elas são e então devemos iniciar a main de um
+        // dado programa
+
+        // Joguei no google e descobri que as pessoas que fizeram este projeto
+        // chamaram estas funcoes, mas ainda estou com duvidas sobre o porque
+        do Math.init();
+        do Output.init();
+        do Screen.init();
+        do Keyboard.init();
+        do Memory.init();
+        do Main.main();
+        do Sys.halt();
+        return;
     }
 
     /** Halts execution. */
     function void halt() {
+        // Segundo o livro, esta funcao implesmente entra em um loop infinito
+        // nao entendi este metodo, mas percebi que deveria ser chamado ao fim
+        // de cada chamada de metodo
+        while(true) {
+        }
+        return;
     }
 
     /** Waits approximately duration milliseconds and then returns. */
     function void wait(int duration) {
+        // Segundo o livro, devemos cronometras um loop que daria o tempo
+        // do wait pedido, no entanto, cada computador terá um tempo diferente
+        // para um dado loop, o correto seria fazer esse timing baseado no
+        // proprio Douglas (ou Hack), mas atualmente não sei como.
+
+        // Supondo que o loop abaixo durasse 1ms, essa seria a solucao, caso dure
+        // menos de 1ms, sera necessario colocar um loop dentro deste, ou multiplicar
+        // o valor de duration por este fator
+        var int c;
+        let c = 0;
+        while(c < duration) {
+            let c = c + 1;
+        }
+        return;
     }
 
     /** Prints the given error code in the form "ERR<errorCode>", and halts. */
     function void error(int errorCode) {
+        do Output.print("ERR<");
+        do Output.print(errorCode);
+        do Output.print(">");
+        do Output.println();
+        do Sys.halt();
+        return;
     }
 }
