@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string.h>
 #include <sstream>
+#include <boost/algorithm/string.hpp>
 #include "Parser.hpp"
 
 using namespace std;
@@ -39,10 +40,13 @@ void Parser::advance(string &line) {
     // We got to check if we got a real code line
     // or just an empty line / comment but also
     // if we've reached the end of our file
+
     do {
         getline(this->infile, this->line);
         clearSpacesAndComments();
     } while(this->line.empty() && this->hasMoreCommands());
+
+    cout << "next line" << endl;
 
     if(!this->line.empty()) {
         line = this->line;
@@ -56,28 +60,35 @@ bool Parser::hasMoreCommands() {
 void Parser::clearSpacesAndComments() {
     // Clears the line of any possible space or comment on it (if existent)
     string buf;
-    stringstream ss(line);
+    bool broken = false;
+
     this->line_split.clear();
+    stringstream ss(this->line);
 
-    // Equivalent to python's split
-    while(ss >> buf) {
-        this->line_split.push_back(buf);
+    // First, we got to check if the line is not empty (has content) because
+    // if it is we cannot "clear" it
+    if(!this->line.empty()) {
+
+        // Equivalent to python's split
+        while(ss >> buf) {
+            if(buf.find("//") == string::npos && !broken) {
+                this->line_split.push_back(buf);
+            } else {
+                broken = true;
+            }
+        }
+
+        for(string s : this->line_split) {
+            cout << s << endl;
+        }
     }
-
-    for(string s : this->line_split) {
-        cout << s << endl;
-    }
-    // for(int i=0; i<= line_split.size(); i++) {
-    //     if(this->line_split[i].find("//"))
-    // }
-
 }
 
 string Parser::arg1() {
     if(this->command_type == "C_ARITHMETIC") {
-        return this->line;
+        return this->line_split[0];
     } else if(this->command_type == "C_POP") {
-
+        return this->
     } else if(this->command_type == "C_PUSH") {
 
     } else if(this->command_type == "C_LABEL") {
