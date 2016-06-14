@@ -40,7 +40,7 @@ class Keyboard {
         return Memory.peek(keyboard);
     }
 
-    /**								
+    /**                             
      * Reads the next character from the keyboard.
      * waits until a key is pressed and then released, then echoes
      * the key to the screen, and returns the value of the pressed key.
@@ -57,3 +57,4 @@ class Keyboard {
     }
 
 }
+
