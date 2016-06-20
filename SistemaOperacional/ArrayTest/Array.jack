@@ -10,9 +10,50 @@ class Array {
 
     /** Constructs a new Array of the given size. */
     function Array new(int size) {
+    	var int array;
+    	let array = Memory.alloc(size);
+    	return array;
     }
 
     /** De-allocates the array and frees its space. */
     method void dispose() {
+    	do Memory.deAlloc(this);
+    	return
+    }
+
+    method void quickSort(int lowerIndex, int higherIndex){
+    	var int i; //lower index of array
+    	var int j; //higher index of array
+    	var int middle; //middle index number
+    	var int pivot;
+    	var int temp;
+    	let i = lowerIndex;
+    	let j = higherIndex;
+    	let middle = Math.divide((lowerIndex+(higherIndex-lowerIndex)),2);
+    	let pivot = array[middle];
+
+    	while (i <= j) {
+    		while (array[i] < pivot) {
+    			let i = i + 1;
+    		}
+    		while (array[j] > pivot) {
+    			let j = j - 1;
+    		}
+    		if (i <= j){                    //exchange numbers
+    			let tem = array[i];
+    			let array[i] = array[j];
+    			let array[j] = temp;
+
+    			let i = i + 1;
+    			let j = j - 1;
+    		}
+    	}
+
+    	// Call quickSort() recursively
+    	if (lowerIndex < j){
+    		do Array.quickSort(lowerIndex, j);
+    	}
+    	if (i < highterIndex)
+    		do Array.quickSort(i, higherIndex);
     }
 }
